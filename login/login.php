@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
     require '../connectDB.php';
+    require '../Util.php';
     session_start();
     //Khai báo utf-8 để hiển thị được tiếng việt
     header('Content-Type: text/html; charset=UTF-8');
@@ -19,9 +20,9 @@
         $myusername = mysqli_real_escape_string($db,filter_input(INPUT_POST, 'username'));
         $mypassword = mysqli_real_escape_string($db,filter_input(INPUT_POST, 'password'));
         $teacherbox= filter_input(INPUT_POST, 'teacher');
-        echo $myusername;
-        echo $mypassword;
-        echo $teacherbox;
+        //echo $myusername;
+        //echo $mypassword;
+        //echo $teacherbox;
         if ($teacherbox == "on"){
             $sql = "SELECT acc_id FROM accounts WHERE acc_username = '$myusername' and acc_password = '$mypassword' and acc_role = 0";
         } else{
@@ -33,7 +34,7 @@
         $count = mysqli_num_rows($result);
         // If result matched $myusername and $mypassword, table row must be 1 row
         if($count == 1) {
-        session_register("myusername");
+        //session_register("myusername");
         // $_SESSION là nơi SESSION lưu trữ thông tin - cũng chính là dữ liệu phục hồi được giữa các trang, 
         // Truy cập biến này trong suốt vòng đời của session để lấy, lưu trữ thông tin. 
         // Nên dùng hàm isset() để kiểm tra một biến session nào đó đã có hay chưa.
@@ -41,6 +42,7 @@
         header("location: welcome.php");
       }else {
          $error = "Your Login Name or Password is invalid";
+         phpAlert($error);
       }
     }
 ?>
