@@ -15,7 +15,7 @@ function connect_db()
     global $conn;
     $hostname = 'localhost:3306';
     $username = 'root';
-    $password = 'Haianh!^!)!(95';
+    $password = '';
     $dbname = "qlsv_db";
     // Nếu chưa kết nối thì thực hiện kết nối
     if (!$conn){
@@ -71,5 +71,5 @@ function init_db()
     }
     
     disconnect_db();
-    return $query2; 
+    //return $query2; 
 }

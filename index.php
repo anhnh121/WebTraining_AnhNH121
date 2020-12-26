@@ -12,9 +12,8 @@ and open the template in the editor.
     <body>
         <?php
         require './connectDB.php';
-        
         init_db();
-        
         ?>
+        <a href="./login/login.php">test</a>
     </body>
 </html>
