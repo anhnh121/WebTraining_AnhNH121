@@ -1,0 +1,28 @@
+https://freetuts.net/chuong-trinh-quan-ly-sinh-vien-php-luu-database-654.html
+https://www.youtube.com/watch?v=TrLAx27Npns
+https://www.tecmint.com/install-php-8-on-ubuntu/
+https://stackoverflow.com/questions/12869189/netbeans-and-xdebug-in-linux
+http://giasutinhoc.vn/chuyen-muc/lap-trinh/lap-trinh-php-co-ban/
+https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-on-ubuntu-20-04
+https://www.tutorialspoint.com/php/php_mysql_login.htm
+https://viblo.asia/p/phuong-thuc-get-va-post-aWj53VBYl6m
+https://freetuts.net/session-va-cookie-trong-php-25.html
+https://www.w3schools.com/css/css_intro.asp
+Virtual host
+/etc/apache2/sites-available
+
+XDebug
+https://xdebug.org/
+
+MYSQL
+- config root login:
+sudo mysql -u root -p
+SELECT user,authentication_string,plugin,host FROM mysql.user;
+ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'new_pasword';
+- Tạo DB mới mặc định ở trong /var/lib/mysql/
+CREATE DATABASE qlsv_db CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+use qlsv_db;
+
+# MY BUGS
+password clear text
+pass root mysql = ''

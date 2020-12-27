@@ -33,18 +33,22 @@
     }
     
     if(filter_input(INPUT_SERVER,'REQUEST_METHOD') === "POST") {
-        $newemail = filter_input(INPUT_POST, 'email');
-        $newphone = filter_input(INPUT_POST, 'phone');
-        if(($login_phone === $newphone) and ($newemail === $login_email)){
-            $error = "Nothing changes";
+        $oldpass = filter_input(INPUT_POST, 'oldpass');
+        $newpass = filter_input(INPUT_POST, 'newpass');
+        $repass = filter_input(INPUT_POST, 'repass');
+        if(($oldpass !== $login_pass) or ($oldpass === $newpass)){
+            $error = "Your Password is invalid";
             phpAlert($error);
-        }else{
-            $update_sql = mysqli_query($db,"UPDATE ACCOUNTS SET acc_email='$newemail',acc_phone='$newphone' WHERE acc_id='$login_id' ");
-            $error = "Change OK";
+        } elseif ($newpass !== $repass) {
+            $error = "You entered two different passwords";
             phpAlert($error);
-            echo "<meta http-equiv='refresh' content='0'>";
+        } else{
+            $update_sql = mysqli_query($db,"UPDATE ACCOUNTS SET acc_password='$newpass' WHERE acc_id='$login_id' ");
+            $error = "Change Password OK";
+            phpAlert($error);
         }
-    }    
+    }
+    
 ?>
 <html>
    <head>
@@ -56,7 +60,7 @@
    
    <body>
         <div class="topnav">
-            <a class="active" href="./welcome.php">Profile</a>
+            <a class="active" href="../login/welcome.php">Profile</a>
             <a href="#qlsv">Quản lý Sinh viên</a>
             <a href="#homework">Giao bài tập</a>
             <a href="#inbox">Hòm thư</a>
@@ -66,26 +70,20 @@
             </div>
         </div>
         <div class="tab">
-            <a class="active" href="./welcome.php">Thông tin cá nhân</a>
-            <a href="../user_info/changepass.php">Đổi mật khẩu</a>
+            <a href="../login/welcome.php">Thông tin cá nhân</a>
+            <a class="active" href="../user_info/changepass.php">Đổi mật khẩu</a>
         </div>
-        <div><a style="color:#45a049;font-size: 50px;">Cập nhật thông tin</a></div>
+        <div><a style="color:#45a049;font-size: 50px;">Đổi mật khẩu</a></div>
         <div class="info">
-            <form action="welcome.php" method="post">
-                <label for="uname">User Name</label><br>
-                <input type="text" id="uname" name="username" value=<?php echo $login_name;?> disabled><br>
+            <form action="../user_info/changepass.php" method = "post">
+                <label for="old">Current Password</label><br>
+                <input type="password" id="oldpass" name="oldpass"><br>
 
-                <label for="fname">Full Name</label><br>
-                <input type="text" id="fname" name="fullname" value=<?php echo "'$login_fullname'";?> disabled><br>
-                   
-                <label for="email">Email</label><br>
-                <input type="text" id="email" name="email" value="<?php echo $login_email;?>"><br>
+                <label for="new">New Password</label><br>
+                <input type="password" id="newpass" name="newpass"><br>
                 
-                <label for="phone">Phone</label><br>
-                <input type="text" id="phone" name="phone" value=<?php echo $login_phone;?>><br>
-                
-                <label for="role">Role</label><br>
-                <input type="text" id="role" name="role" value=<?php echo $role;?> disabled><br>
+                <label for="re">Re-Enter Password</label><br>
+                <input type="password" id="repass" name="repass"><br>
                 
                 <input type="submit" value="Submit"><br>
             </form>
