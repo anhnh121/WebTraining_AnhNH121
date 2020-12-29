@@ -12,7 +12,7 @@
     
     $db = connect_db();
     $user_check = $_SESSION['login_user'];
-    $ses_sql = mysqli_query($db,"select * from accounts where acc_username = '$user_check' ");
+    $ses_sql = mysqli_query($db,"select * from ACCOUNTS where acc_username = '$user_check' ");
     $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
     $login_id = $row['acc_id'];
     $login_name = $row['acc_username'];
@@ -57,7 +57,7 @@
    <body>
         <div class="topnav">
             <a class="active" href="./welcome.php">Profile</a>
-            <a href="#qlsv">Quản lý Sinh viên</a>
+            <a href="../user_info/qlsv.php">Quản lý Sinh viên</a>
             <a href="#homework">Giao bài tập</a>
             <a href="#inbox">Hòm thư</a>
             <div class="topnav-right">

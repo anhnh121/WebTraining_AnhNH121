@@ -7,7 +7,6 @@
  */
     //include('session.php');
     require '../connectDB.php';
-    require '../Util.php';
     session_start(); 
     
     $db = connect_db();
@@ -33,22 +32,13 @@
     }
     
     if(filter_input(INPUT_SERVER,'REQUEST_METHOD') === "POST") {
-        $oldpass = filter_input(INPUT_POST, 'oldpass');
-        $newpass = filter_input(INPUT_POST, 'newpass');
-        $repass = filter_input(INPUT_POST, 'repass');
-        if(($oldpass !== $login_pass) or ($oldpass === $newpass)){
-            $error = "Your Password is invalid";
-            phpAlert($error);
-        } elseif ($newpass !== $repass) {
-            $error = "You entered two different passwords";
-            phpAlert($error);
-        } else{
-            $update_sql = mysqli_query($db,"UPDATE ACCOUNTS SET acc_password='$newpass' WHERE acc_id='$login_id' ");
-            $error = "Change Password OK";
-            phpAlert($error);
-        }
-    }
-    
+        $username = filter_input(INPUT_POST, 'username');
+        $password = filter_input(INPUT_POST, 'password');
+        $fullname = filter_input(INPUT_POST, 'fullname');
+        $email = filter_input(INPUT_POST, 'email');
+        $phone = filter_input(INPUT_POST, 'phone');
+        add_student($username, $password, $fullname, $email, $phone);
+    }    
 ?>
 <html>
    <head>
@@ -60,8 +50,8 @@
    
    <body>
         <div class="topnav">
-            <a class="active" href="../login/welcome.php">Profile</a>
-            <a href="../user_info/qlsv.php">Quản lý Sinh viên</a>
+            <a href="../login/welcome.php">Profile</a>
+            <a class="active" href="qlsv.php">Quản lý Sinh viên</a>
             <a href="#homework">Giao bài tập</a>
             <a href="#inbox">Hòm thư</a>
             <div class="topnav-right">
@@ -70,21 +60,27 @@
             </div>
         </div>
         <div class="tab">
-            <a href="../login/welcome.php">Thông tin cá nhân</a>
-            <a class="active" href="../user_info/changepass.php">Đổi mật khẩu</a>
+            <a href="qlsv.php">Cập nhật sinh viên</a>
+            <a class="active" href="adduser.php">Thêm sinh viên</a>
         </div>
-        <div><a style="color:#45a049;font-size: 50px;">Đổi mật khẩu</a></div>
+        <div><a style="color:#45a049;font-size: 50px;">Thêm sinh viên</a></div>
         <div class="info">
-            <form action="../user_info/changepass.php" method = "post">
-                <label for="old">Current Password</label><br>
-                <input type="password" id="oldpass" name="oldpass"><br>
+            <form action="adduser.php" method="post">
+                <label for="uname">User Name</label><br>
+                <input type="text" id="uname" name="username"><br>
+                
+                <label for="uname">Password</label><br>
+                <input type="password" id="password" name="password"><br> 
+                
+                <label for="fname">Full Name</label><br>
+                <input type="text" id="fname" name="fullname"><br>
+                   
+                <label for="email">Email</label><br>
+                <input type="text" id="email" name="email""><br>
+                
+                <label for="phone">Phone</label><br>
+                <input type="text" id="phone" name="phone"><br>
 
-                <label for="new">New Password</label><br>
-                <input type="password" id="newpass" name="newpass"><br>
-                
-                <label for="re">Re-Enter Password</label><br>
-                <input type="password" id="repass" name="repass"><br>
-                
                 <input type="submit" value="Submit"><br>
             </form>
         </div>

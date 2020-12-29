@@ -24,9 +24,9 @@
         //echo $mypassword;
         //echo $teacherbox;
         if ($teacherbox == "on"){
-            $sql = "SELECT acc_id FROM accounts WHERE acc_username = '$myusername' and acc_password = '$mypassword' and acc_role = 0";
+            $sql = "SELECT acc_id FROM ACCOUNTS WHERE acc_username = '$myusername' and acc_password = '$mypassword' and acc_role = 0";
         } else{
-            $sql = "SELECT acc_id FROM accounts WHERE acc_username = '$myusername' and acc_password = '$mypassword' and acc_role = 1";
+            $sql = "SELECT acc_id FROM ACCOUNTS WHERE acc_username = '$myusername' and acc_password = '$mypassword' and acc_role = 1";
         }
         $result = mysqli_query($db,$sql);
         // Associative array

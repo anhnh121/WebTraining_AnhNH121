@@ -7,7 +7,6 @@
  */
 // Biến kết nối toàn cục
 global $conn;
-
 // Hàm kết nối database
 function connect_db()
 {
@@ -49,7 +48,7 @@ function init_db()
 	acc_password varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 	acc_fullname varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 	acc_email varchar(255) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
-	acc_phone int(11),
+	acc_phone varchar(255) COLLATE utf8_unicode_ci,
 	acc_role int(11) NOT NULL)";
     
     $sql_insert = "INSERT INTO ACCOUNTS (acc_id, acc_username, acc_password, acc_fullname, acc_email, acc_phone, acc_role) VALUES
@@ -73,3 +72,45 @@ function init_db()
     disconnect_db();
     //return $query2; 
 }
+
+// Hàm thêm sinh viên
+function add_student($add_username, $add_password, $add_fullname, $add_email, $add_phone)
+{
+    // Gọi tới biến toàn cục $conn
+    global $conn;
+     
+    // Hàm kết nối
+    connect_db();
+     
+    // Chống SQL Injection
+    $username = addslashes($add_username);
+    $password = addslashes($add_password);
+    $fullname = addslashes($add_fullname);
+    $phone = addslashes($add_phone);
+    $email = addslashes($add_email);
+     
+    // Câu truy vấn thêm
+    $sql = "
+            INSERT INTO ACCOUNTS(acc_username, acc_password, acc_fullname, acc_email, acc_phone, acc_role) VALUES
+            ('$username','$password','$fullname','$email','$phone', 1)";
+    $sql_u = "SELECT * FROM ACCOUNTS WHERE acc_username='$username'";
+    $sql_e = "SELECT * FROM ACCOUNTS WHERE acc_email='$email'"; 
+    $res_u = mysqli_query($conn, $sql_u);
+    $res_e = mysqli_query($conn, $sql_e);
+    
+    if ((mysqli_num_rows($res_u) > 0) or (mysqli_num_rows($res_e) > 0)) {
+        $error = "Sorry... username or email already taken"; 	 	
+    }else{
+//       $query = "INSERT INTO users (username, email, password) 
+//              VALUES ('$username', '$email', '".md5($password)."')";
+        $query = mysqli_query($conn, $sql);
+        $error = "Add OK !!!";
+    }
+    Alert($error);
+    
+}
+ 
+function Alert($msg) {
+    echo '<script type="text/javascript">alert("' . $msg . '")</script>';
+}
+?>
