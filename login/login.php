@@ -38,8 +38,13 @@
         // $_SESSION là nơi SESSION lưu trữ thông tin - cũng chính là dữ liệu phục hồi được giữa các trang, 
         // Truy cập biến này trong suốt vòng đời của session để lấy, lưu trữ thông tin. 
         // Nên dùng hàm isset() để kiểm tra một biến session nào đó đã có hay chưa.
-        $_SESSION['login_user'] = $myusername;   
-        header("location: welcome.php");
+            $_SESSION['login_user'] = $myusername;  
+//            if($teacherbox == "on"){
+//                header("location: welcome.php");
+//            } else {
+//                header("location: students.php");
+//            }
+            header("location: welcome.php");
       }else {
          $error = "Your Login Name or Password is invalid";
          phpAlert($error);

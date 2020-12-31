@@ -57,8 +57,15 @@
    <body>
         <div class="topnav">
             <a class="active" href="./welcome.php">Profile</a>
-            <a href="../user_info/qlsv.php">Quản lý Sinh viên</a>
-            <a href="#homework">Giao bài tập</a>
+            <?php 
+                if($login_role == 0){
+                    echo "<a href='../user_info/qlsv.php'>Quản lý Sinh viên</a>";
+                    echo "<a href='#homework'>Giao bài tập</a>";            
+                }else{
+//                    echo "<a href='../user_info/qlsv.php'>Thông tin Sinh viên</a>";
+                    echo "<a href='#bt'>Bài tập</a>";
+                }
+            ?>   
             <a href="#inbox">Hòm thư</a>
             <div class="topnav-right">
                 <a style="color: crimson"><?php echo $role . ": ". $login_name; ?></a>
