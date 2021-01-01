@@ -35,11 +35,14 @@
     if(filter_input(INPUT_SERVER,'REQUEST_METHOD') === "POST") {
         $newemail = filter_input(INPUT_POST, 'email');
         $newphone = filter_input(INPUT_POST, 'phone');
+        // Chống SQL Injection
+        $update_email = addslashes($newemail);
+        $update_phone = addslashes($newphone);
         if(($login_phone === $newphone) and ($newemail === $login_email)){
             $error = "Nothing changes";
             phpAlert($error);
         }else{
-            $update_sql = mysqli_query($db,"UPDATE ACCOUNTS SET acc_email='$newemail',acc_phone='$newphone' WHERE acc_id='$login_id' ");
+            $update_sql = mysqli_query($db,"UPDATE ACCOUNTS SET acc_email='$update_email',acc_phone='$update_phone' WHERE acc_id='$login_id' ");
             $error = "Change OK";
             phpAlert($error);
             

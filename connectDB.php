@@ -16,8 +16,8 @@ function connect_db()
     $username = 'root';
     $password = '';
     $dbname = "qlsv_db";
-	
-	//$hostname = 'localhost';
+    
+    //$hostname = 'localhost';
     //$username = 'id15742785_root';
     //$password = 'a##S4+4/B]g2D/~A';
     //$dbname = "id15742785_qlsv_db";
@@ -113,7 +113,40 @@ function add_student($add_username, $add_password, $add_fullname, $add_email, $a
     }
     Alert($error);   
 }
- 
+
+// Hàm sửa sinh viên
+function edit_student($student_id, $edit_username, $edit_password, $edit_fullname, $edit_email, $edit_phone)
+{
+    // Gọi tới biến toàn cục $conn
+    global $conn;
+    
+    // Hàm kết nối
+    connect_db();
+    
+    // Chống SQL Injection
+    $username = addslashes($edit_username);
+    $password = addslashes($edit_password);
+    $fullname = addslashes($edit_fullname);
+    $email = addslashes($edit_email);
+    $phone = addslashes($edit_phone);
+    
+    // Câu truy van
+    $sql = "
+            UPDATE ACCOUNTS SET
+            acc_username = '$username',
+            acc_password = '$password',
+            acc_fullname = '$fullname',
+            acc_email = '$email',
+            acc_phone = '$phone',
+            WHERE acc_id = $student_id
+    ";
+    
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $sql);
+    
+    return $query;
+}
+
 function Alert($msg) {
     echo '<script type="text/javascript">alert("' . $msg . '")</script>';
 }
@@ -127,7 +160,7 @@ function delete_student($student_id)
     // Hàm kết nối
     connect_db();
     
-    // Câu truy sửa
+    // Câu truy van
     $sql = "
             DELETE FROM ACCOUNTS
             WHERE acc_id = $student_id

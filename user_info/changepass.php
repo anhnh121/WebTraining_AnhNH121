@@ -36,6 +36,7 @@
         $oldpass = filter_input(INPUT_POST, 'oldpass');
         $newpass = filter_input(INPUT_POST, 'newpass');
         $repass = filter_input(INPUT_POST, 'repass');
+        $update_pass = addslashes($newpass);
         if(($oldpass !== $login_pass) or ($oldpass === $newpass)){
             $error = "Your Password is invalid";
             phpAlert($error);
@@ -43,7 +44,7 @@
             $error = "You entered two different passwords";
             phpAlert($error);
         } else{
-            $update_sql = mysqli_query($db,"UPDATE ACCOUNTS SET acc_password='$newpass' WHERE acc_id='$login_id' ");
+            $update_sql = mysqli_query($db,"UPDATE ACCOUNTS SET acc_password='$update_pass' WHERE acc_id='$login_id' ");
             $error = "Change Password OK";
             phpAlert($error);
         }
