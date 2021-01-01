@@ -129,22 +129,33 @@ function edit_student($student_id, $edit_username, $edit_password, $edit_fullnam
     $fullname = addslashes($edit_fullname);
     $email = addslashes($edit_email);
     $phone = addslashes($edit_phone);
-    
-    // Câu truy van
     $sql = "
-            UPDATE ACCOUNTS SET
-            acc_username = '$username',
-            acc_password = '$password',
-            acc_fullname = '$fullname',
-            acc_email = '$email',
-            acc_phone = '$phone',
-            WHERE acc_id = $student_id
-    ";
+        UPDATE ACCOUNTS SET
+        acc_username = '$username',
+        acc_password = '$password',
+        acc_fullname = '$fullname',
+        acc_email = '$email',
+        acc_phone = '$phone',
+        WHERE acc_id = $student_id";
+    $checknew = mysqli_query($db,"select * from ACCOUNTS where acc_id = '$student_id' ");
+    // Check New
+    $row = mysqli_fetch_array($checknew,MYSQLI_ASSOC);
+    $login_name = $row['acc_username'];
+    $login_fullname = $row['acc_fullname'];
+    $login_email = $row['acc_email'];
+    $login_phone = $row['acc_phone'];
+    $login_pass = $row['acc_password'];
     
-    // Thực hiện câu truy vấn
-    $query = mysqli_query($conn, $sql);
-    
-    return $query;
+    if(($login_name === $edit_username) and ($login_pass === $edit_password) and ($login_fullname === $edit_fullname)and ($login_email === $edit_email)and ($login_phone === $edit_phone)){
+        $error = "Nothing changes";
+
+    }else{  
+        // Thực hiện câu truy vấn
+        $query = mysqli_query($conn, $sql); 
+        $error = "Edit OK";        
+    }
+    Alert($error);
+
 }
 
 function Alert($msg) {
