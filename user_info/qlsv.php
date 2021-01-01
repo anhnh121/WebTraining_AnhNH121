@@ -15,46 +15,30 @@
     $ses_sql = mysqli_query($db,"select * from ACCOUNTS where acc_username = '$login_name' ");
     $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
     $login_role = $row['acc_role'];
+    $login_id = $row['acc_id'];
     if($login_role == 0){
         $role = "Teacher";
     } else{
         $role = "Student";
     }
-//    $ses_sql = mysqli_query($db,"select * from ACCOUNTS where acc_role=1 ");
-//    while($row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC)){
-//        echo "id: " . $row['acc_id']. " - Name: " . $row['acc_username']. "- FullName:  " . $row["acc_fullname"]. "<br>";
-//    }
-//    $login_id = $row['acc_id'];
-//    $login_name = $row['acc_username'];
-//    $login_role = $row['acc_role'];
-//    $login_fullname = $row['acc_fullname'];
-//    $login_email = $row['acc_email'];
-//    $login_phone = $row['acc_phone'];
-//    $login_pass = $row['acc_password'];
-
 
     if(!isset($_SESSION['login_user'])){
        header("location:login.php");
        die();
     }
-    
-//    echo "<table border='1'>
-//    <tr>
-//    <th>Firstname</th>
-//    <th>Lastname</th>
-//    </tr>";
-//
-//    while($row)
-//    {
-//        echo "<tr>";
-//        echo "<td>" . $row['acc_username'] . "</td>";
-//        echo "<td>" . $row['acc_fullname'] . "</td>";
-//        echo "</tr>";
-//    }
-//    echo "</table>";
-//
-//    mysqli_close($con);
-    
+        
+    if(filter_input(INPUT_SERVER,'REQUEST_METHOD') === "POST") {     
+        if(isset($_POST['deleteItem']) AND is_numeric($_POST['deleteItem'])){
+            $delete_id = filter_input(INPUT_POST, 'deleteItem');
+            delete_student($delete_id);
+            
+        }
+//        if(isset(filter_input(INPUT_POST, 'updateItem')) and is_numeric(filter_input(INPUT_POST, 'updateItem'))){
+//            
+//        }
+        echo "<meta http-equiv='refresh' content='0'>";
+    }   
+
 ?>
 <html>
    <head>
@@ -88,7 +72,7 @@
             <a href="../login/welcome.php">Profile</a>
             <?php 
                 if($login_role == 0){
-                    echo "<a href='../user_info/qlsv.php'>Quản lý Sinh viên</a>";
+                    echo "<a class='active' href='../user_info/qlsv.php'>Quản lý Sinh viên</a>";
                     echo "<a href='#homework'>Giao bài tập</a>";            
                 }else{
 //                    echo "<a href='../user_info/qlsv.php'>Thông tin Sinh viên</a>";
@@ -107,6 +91,7 @@
         </div>
         <div><a style="color:#45a049;font-size: 50px;">Cập nhật sinh viên</a></div>
         <div class="info" style="overflow-x:auto; padding-left: 150px;">
+            <form action="" method ="post">        
               <table>
                 <tr style="background-color: #006600; color: pink;">
                   <th>STT</th>
@@ -114,23 +99,29 @@
                   <th>Student Name</th>
                   <th>Email</th>
                   <th>Phone</th>
+                  <th>Actions</th>
                 </tr>
                   <?php
                     $sql_query = mysqli_query($db,"select * from ACCOUNTS where acc_role=1 ");
                     $i = 1;
-                    while($row = mysqli_fetch_array($sql_query,MYSQLI_ASSOC)){                        
+                    while($row = mysqli_fetch_array($sql_query,MYSQLI_ASSOC)){ 
+                        $button_update = '<button type="submit" name="updateItem" value="'.$row["acc_id"].'">Edit</button>';
+                        $button_delete = '<button type="submit" name="deleteItem" value="'.$row["acc_id"].'">Delete</button>';
                         echo "<tr>";
                         echo "<td>" . $i . "</td>";
                         echo "<td>" . $row['acc_username'] . "</td>";
                         echo "<td>" . $row['acc_fullname'] . "</td>";
                         echo "<td>" . $row['acc_email'] . "</td>";
                         echo "<td>" . $row['acc_phone'] . "</td>";
+                        echo "<td>" . $button_update . " " . $button_delete . "</td>";
+//                        echo "<td>" . "Button Here" . "</td>";
                         echo "</tr>";
                         $i++;
 //                        echo "id: " . $row['acc_id']. " - Name: " . $row['acc_username']. "- FullName:  " . $row["acc_fullname"]. "<br>";
                     }
                   ?>            
               </table>
+            </form>
         </div>
        
    </body>

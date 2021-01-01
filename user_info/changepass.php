@@ -47,6 +47,7 @@
             $error = "Change Password OK";
             phpAlert($error);
         }
+        echo "<meta http-equiv='refresh' content='0'>";
     }
     
 ?>

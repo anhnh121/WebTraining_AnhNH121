@@ -42,8 +42,9 @@
             $update_sql = mysqli_query($db,"UPDATE ACCOUNTS SET acc_email='$newemail',acc_phone='$newphone' WHERE acc_id='$login_id' ");
             $error = "Change OK";
             phpAlert($error);
-            echo "<meta http-equiv='refresh' content='0'>";
+            
         }
+        echo "<meta http-equiv='refresh' content='0'>";
     }    
 ?>
 <html>

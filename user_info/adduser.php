@@ -38,6 +38,7 @@
         $email = filter_input(INPUT_POST, 'email');
         $phone = filter_input(INPUT_POST, 'phone');
         add_student($username, $password, $fullname, $email, $phone);
+        echo "<meta http-equiv='refresh' content='0'>";
     }    
 ?>
 <html>

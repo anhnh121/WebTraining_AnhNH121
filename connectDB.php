@@ -16,6 +16,11 @@ function connect_db()
     $username = 'root';
     $password = '';
     $dbname = "qlsv_db";
+	
+	//$hostname = 'localhost';
+    //$username = 'id15742785_root';
+    //$password = 'a##S4+4/B]g2D/~A';
+    //$dbname = "id15742785_qlsv_db";
     // Nếu chưa kết nối thì thực hiện kết nối
     if (!$conn){
         $conn = mysqli_connect($hostname, $username, $password, $dbname) or die ('Can\'t not connect to database');
@@ -106,11 +111,32 @@ function add_student($add_username, $add_password, $add_fullname, $add_email, $a
         $query = mysqli_query($conn, $sql);
         $error = "Add OK !!!";
     }
-    Alert($error);
-    
+    Alert($error);   
 }
  
 function Alert($msg) {
     echo '<script type="text/javascript">alert("' . $msg . '")</script>';
 }
+
+// Hàm xóa sinh viên
+function delete_student($student_id)
+{
+    // Gọi tới biến toàn cục $conn
+    global $conn;
+    
+    // Hàm kết nối
+    connect_db();
+    
+    // Câu truy sửa
+    $sql = "
+            DELETE FROM ACCOUNTS
+            WHERE acc_id = $student_id
+    ";
+    
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $sql);
+    
+    return $query;
+}
+
 ?>
