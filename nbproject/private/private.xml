@@ -5,12 +5,12 @@
         <group>
             <file>file:/C:/xampp/htdocs/challenge1a_anhnh121/login/login.php</file>
             <file>file:/C:/xampp/htdocs/challenge1a_anhnh121/user_info/changepass.php</file>
-            <file>file:/C:/xampp/htdocs/challenge1a_anhnh121/user_info/adduser.php</file>
+            <file>file:/C:/xampp/htdocs/challenge1a_anhnh121/user_info/update_info.css</file>
+            <file>file:/C:/xampp/htdocs/challenge1a_anhnh121/modal.css</file>
             <file>file:/C:/xampp/htdocs/challenge1a_anhnh121/user_info/qlsv.php</file>
             <file>file:/C:/xampp/htdocs/challenge1a_anhnh121/connectDB.php</file>
             <file>file:/C:/xampp/htdocs/challenge1a_anhnh121/login/welcome.php</file>
             <file>file:/C:/xampp/htdocs/challenge1a_anhnh121/index.php</file>
-            <file>file:/C:/xampp/htdocs/challenge1a_anhnh121/Util.php</file>
         </group>
     </open-files>
 </project-private>

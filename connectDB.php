@@ -135,9 +135,9 @@ function edit_student($student_id, $edit_username, $edit_password, $edit_fullnam
         acc_password = '$password',
         acc_fullname = '$fullname',
         acc_email = '$email',
-        acc_phone = '$phone',
-        WHERE acc_id = $student_id";
-    $checknew = mysqli_query($db,"select * from ACCOUNTS where acc_id = '$student_id' ");
+        acc_phone = '$phone'
+        WHERE acc_id = '$student_id'";
+    $checknew = mysqli_query($conn,"select * from ACCOUNTS where acc_id = '$student_id' ");
     // Check New
     $row = mysqli_fetch_array($checknew,MYSQLI_ASSOC);
     $login_name = $row['acc_username'];
@@ -181,6 +181,35 @@ function delete_student($student_id)
     $query = mysqli_query($conn, $sql);
     
     return $query;
+}
+
+// Hàm lấy tất cả sinh viên
+function get_all_students()
+{
+    // Gọi tới biến toàn cục $conn
+    global $conn;
+    
+    // Hàm kết nối
+    connect_db();
+    
+    // Câu truy vấn lấy tất cả sinh viên
+    $sql = "select * from ACCOUNTS where acc_role=1 ";
+    
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $sql);
+    
+    // Mảng chứa kết quả
+    $result = array();
+    
+    // Lặp qua từng record và đưa vào biến kết quả
+    if ($query){
+        while ($row = mysqli_fetch_assoc($query)){
+            $result[] = $row;
+        }
+    }
+    
+    // Trả kết quả về
+    return $result;
 }
 
 ?>
