@@ -146,9 +146,15 @@ function edit_student($student_id, $edit_username, $edit_password, $edit_fullnam
     $login_phone = $row['acc_phone'];
     $login_pass = $row['acc_password'];
     
-    if(($login_name === $edit_username) and ($login_pass === $edit_password) and ($login_fullname === $edit_fullname)and ($login_email === $edit_email)and ($login_phone === $edit_phone)){
+    $sql_u = "SELECT * FROM ACCOUNTS WHERE acc_username='$username' AND acc_id != '$student_id'";
+    $sql_e = "SELECT * FROM ACCOUNTS WHERE acc_email='$email' AND acc_id != '$student_id'"; 
+    $res_u = mysqli_query($conn, $sql_u);
+    $res_e = mysqli_query($conn, $sql_e);
+    
+    if ((mysqli_num_rows($res_u) > 0) or (mysqli_num_rows($res_e) > 0)) {
+        $error = "Sorry... username or email already taken"; 	 	
+    }elseif(($login_name === $edit_username) and ($login_pass === $edit_password) and ($login_fullname === $edit_fullname)and ($login_email === $edit_email)and ($login_phone === $edit_phone)){
         $error = "Nothing changes";
-
     }else{  
         // Thực hiện câu truy vấn
         $query = mysqli_query($conn, $sql); 
