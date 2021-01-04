@@ -1,75 +1,75 @@
-<!DOCTYPE html>
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+    //include('session.php');
+    require '../connectDB.php';
+    require '../Util.php';
+    session_start(); 
+    
+    $db = connect_db();
+    $user_check = $_SESSION['login_user'];
+    $ses_sql = mysqli_query($db,"select * from ACCOUNTS where acc_username = '$user_check' ");
+    $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
+    $login_id = $row['acc_id'];
+    $login_name = $row['acc_username'];
+    $login_role = $row['acc_role'];
+    $login_fullname = $row['acc_fullname'];
+    $login_email = $row['acc_email'];
+    $login_phone = $row['acc_phone'];
+    $login_pass = $row['acc_password'];
+    if($login_role == 0){
+        $role = "Teacher";
+    } else{
+        $role = "Student";
+    }
+
+    if(!isset($_SESSION['login_user'])){
+       header("location:login.php");
+       die();
+    }
+    
+    
+    echo "<meta http-equiv='refresh' content='0'>";
+?>
 <html>
-<head>
-<!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
-<style>
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.topnav {
-  overflow: hidden;
-  background-color: #333;
-}
-
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.topnav a.active {
-  background-color: #4CAF50;
-  color: white;
-}
-</style>
-</head>
-<body>
-
-<div class="topnav">
-  <a class="active" href="#home">Home</a>
-  <a href="#news">News</a>
-  <a href="#contact">Contact</a>
-  <a href="#about">About</a>
-</div>
-
-<div style="padding-left:16px">
-  <h2>Top Navigation Example</h2>
-  <p>Some content..</p>
-</div>
-
-</body>
-</html>
-
-<!--        <div class="tab">
-            <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">London</button>
-            <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
-            <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+   <head>
+      <title>Welcome </title>
+      <link rel="stylesheet" type="text/css" href="../topnav.css" />
+      <link rel="stylesheet" type="text/css" href="../sidenav.css" />
+      <link rel="stylesheet" type="text/css" href="../user_info/update_info.css" />
+   </head>
+   
+   <body>
+        <div class="topnav">
+            <a class="active" href="./welcome.php">Profile</a>
+            <a class="active" href="../user_info/userlist.php">Danh sách người dùng</a>
+            <?php 
+                if($login_role == 0){
+                    echo "<a href='../user_info/qlsv.php'>Quản lý Sinh viên</a>";
+                    echo "<a href='#homework'>Giao bài tập</a>";            
+                }else{
+                    echo "<a href='#bt'>Bài tập</a>";
+                }
+            ?>   
+            <a href="#inbox">Hòm thư</a>
+            <div class="topnav-right">
+                <a style="color: crimson"><?php echo $role . ": ". $login_name; ?></a>
+                <a href = "logout.php">Sign Out</a>
+            </div>
         </div>
-        <script>
-            function openCity(evt, cityName) {
-              var i, tabcontent, tablinks;
-              tabcontent = document.getElementsByClassName("tabcontent");
-              for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-              }
-              tablinks = document.getElementsByClassName("tablinks");
-              for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-              }
-              document.getElementById(cityName).style.display = "block";
-              evt.currentTarget.className += " active";
-            }
-
-            // Get the element with id="defaultOpen" and click on it
-            document.getElementById("defaultOpen").click();
-        </script>-->
+        <div class="tab">
+            <a class="active" href="./welcome.php">Thông tin cá nhân</a>
+            <a href="../user_info/changepass.php">Đổi mật khẩu</a>
+        </div>
+        <div><a style="color:#45a049;font-size: 50px;">Cập nhật thông tin</a></div>
+        <div class="info">
+            
+        </div>
+       
+   </body>
+   
+</html>

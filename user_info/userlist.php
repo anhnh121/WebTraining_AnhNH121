@@ -16,7 +16,7 @@
     $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
     $login_role = $row['acc_role'];
     $login_id = $row['acc_id'];
-    $students = get_all_students();
+    $users = get_all_users($login_id);
                     
     if($login_role == 0){
         $role = "Teacher";
@@ -28,24 +28,7 @@
        header("location:login.php");
        die();
     }
-
-    if(filter_input(INPUT_SERVER,'REQUEST_METHOD') === "POST") {     
-        if(isset($_POST['deleteItem']) AND is_numeric($_POST['deleteItem'])){
-            $delete_id = filter_input(INPUT_POST, 'deleteItem');
-            delete_student($delete_id);
-            
-        }
-        if(isset($_POST['updateItem']) AND is_numeric(filter_input(INPUT_POST, 'updateItem'))){
-            $update_id = filter_input(INPUT_POST, 'updateItem');
-            $username = filter_input(INPUT_POST, 'username');
-            $password = filter_input(INPUT_POST, 'password');
-            $fullname = filter_input(INPUT_POST, 'fullname');
-            $email = filter_input(INPUT_POST, 'email');
-            $phone = filter_input(INPUT_POST, 'phone');
-            edit_student($update_id, $username, $password, $fullname, $email, $phone);
-        }
-        echo "<meta http-equiv='refresh' content='0'>";
-    }   
+  
     disconnect_db();
 ?>
 <html>
@@ -82,10 +65,10 @@
    <body>
         <div class="topnav">
             <a href="../login/welcome.php">Profile</a>
-            <a href="../user_info/userlist.php">Danh sách người dùng</a>
+            <a class='active' href="../user_info/userlist.php">Danh sách người dùng</a>
             <?php 
                 if($login_role == 0){
-                    echo "<a class='active' href='../user_info/qlsv.php'>Quản lý Sinh viên</a>";
+                    echo "<a href='../user_info/qlsv.php'>Quản lý Sinh viên</a>";
                     echo "<a href='#homework'>Giao bài tập</a>";            
                 }else{
 //                    echo "<a href='../user_info/qlsv.php'>Thông tin Sinh viên</a>";
@@ -99,48 +82,39 @@
             </div>
         </div>
         <div class="tab">
-            <a class="active" href="qlsv.php">Cập nhật sinh viên</a>
-            <a href="adduser.php">Thêm sinh viên</a>
         </div>
-        <div><a style="color:#45a049;font-size: 50px;">Cập nhật sinh viên</a></div>
+        <div><a style="color:#45a049;font-size: 50px;">Danh sách người dùng</a></div>
         <div class="info" style="overflow-x:auto; padding-left: 150px;">
-<!--            <form action="qlsv.php" method ="post">        -->
               <table>
                 <tr style="background-color: #006600; color: pink;">
                   <th>STT</th>
                   <th>User Name</th>
-                  <th>Password</th>
-                  <th>Student Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Actions</th>
+                  <th>Full Name</th>
+                  <th>Role</th>
+                  <th>Details</th>
                 </tr>
                 <?php
                     $i=0;
-                    foreach ($students as $item){$i++; ?>
+                    foreach ($users as $item){
+                        $i++; 
+                        if($item['acc_role'] == 0){
+                            $user_role = "Teacher";
+                        } else{
+                            $user_role = "Student";
+                        }
+                        $acc_idrow=$item['acc_id'];
+                ?>
                         <form action="qlsv.php" method ="post">
                         <tr>
                             <td><?php echo $i; ?></td>
-                            <td><input style="width: 90%;" type="text" id="username" name="username" value="<?php echo $item['acc_username'];?>" ></td>
-                            <td><input style="width: 90%;" type="password" id="password" name="password" value="<?php echo $item['acc_password'];?>"></td>
-                            <td><input style="width: 90%;" type="text" id="fullname" name="fullname" value="<?php echo $item['acc_fullname'];?>"></td>
-                            <td><input style="width: 90%;" type="text" id="email" name="email" value="<?php echo $item['acc_email'];?>"></td>
-                            <td><input style="width: 90%;" type="text" id="phone" name="phone" value="<?php echo $item['acc_phone'];?>"></td>
-                            <td>
-<!--                                <button type="hidden" name="myItem" value="">Hidden</button>-->
-                                <button type="submit" name="updateItem" value="<?php echo $item['acc_id'];?>">Edit</button>
-                                <button type="submit" name="deleteItem" value="<?php echo $item['acc_id'];?>">Delete</button>
-                            </td>
+                            <td><?php echo $item['acc_username'];?></td>
+                            <td><?php echo $item['acc_fullname'];?></td>
+                            <td><?php echo $user_role;?></td>
+                            <td><a href="../msg/msg.php?acc_row=<?php echo $acc_idrow; ?>">Details</a></td>
                         </tr>   
                         </form>
-                  <?php } ?>
-<!--//                        echo "<tr>";
-//                        echo "<td>" . $i . "</td>";
-//                        echo "<td>" . $input_username . "</td>";
-//                        echo "</tr>";-->
-           
+                  <?php } ?>      
               </table>
-<!--            </form>-->
         </div>
        
    </body>

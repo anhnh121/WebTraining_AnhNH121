@@ -47,7 +47,7 @@ function init_db()
 {
     // Gọi tới biến toàn cục $conn
     global $conn;
-    $sql_create = "CREATE TABLE ACCOUNTS(
+    $sql_create = "CREATE TABLE IF NOT EXISTS ACCOUNTS(
 	acc_id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	acc_username varchar(255) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
 	acc_password varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -55,6 +55,16 @@ function init_db()
 	acc_email varchar(255) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
 	acc_phone varchar(255) COLLATE utf8_unicode_ci,
 	acc_role int(11) NOT NULL)";
+    
+    $sql_create2 = "CREATE TABLE IF NOT EXISTS MSG(
+	msg_id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	msg_msg varchar(255) COLLATE utf8_unicode_ci,
+	msg_idsender int(11) NOT NULL,
+	msg_idrecver int(11) NOT NULL,
+        msg_time varchar(255) COLLATE utf8_unicode_ci,
+        FOREIGN KEY (msg_idsender) REFERENCES ACCOUNTS(acc_id),
+        FOREIGN KEY (msg_idrecver) REFERENCES ACCOUNTS(acc_id)
+        )";
     
     $sql_insert = "INSERT INTO ACCOUNTS (acc_id, acc_username, acc_password, acc_fullname, acc_email, acc_phone, acc_role) VALUES
                                         (1, 'teacher1', '123456a@A', 'Nguyen Van A', 'uchiha1610@gmail.com', '0123456789', 0),
@@ -64,14 +74,15 @@ function init_db()
     // Hàm kết nối
     connect_db();
     
-    // Câu truy vấn kiểm tra bảng có tồn tại không
+//    // Câu truy vấn kiểm tra bảng có tồn tại không
     $sql_check = "SHOW TABLES LIKE 'ACCOUNTS'";
     $result = mysqli_query($conn, $sql_check);
     $rowcount=mysqli_num_rows($result);
     // Nếu chưa tồn tại 
     if($rowcount < 1){
         $query1 = mysqli_query($conn, $sql_create);
-        $query2 = mysqli_query($conn, $sql_insert);
+        $query2 = mysqli_query($conn, $sql_create2);
+        $query3 = mysqli_query($conn, $sql_insert);
     }
     
     disconnect_db();
@@ -216,6 +227,70 @@ function get_all_students()
     
     // Trả kết quả về
     return $result;
+}
+
+// Hàm lấy tất cả sinh viên
+function get_all_users($id)
+{
+    // Gọi tới biến toàn cục $conn
+    global $conn;
+    
+    // Hàm kết nối
+    connect_db();
+    
+    // Câu truy vấn lấy tất cả sinh viên
+    $sql = "select * from ACCOUNTS where acc_id!=$id";
+    
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $sql);
+    
+    // Mảng chứa kết quả
+    $result = array();
+    
+    // Lặp qua từng record và đưa vào biến kết quả
+    if ($query){
+        while ($row = mysqli_fetch_assoc($query)){
+            $result[] = $row;
+        }
+    }
+    
+    // Trả kết quả về
+    return $result;
+}
+
+// Hàm lấy tất cả sinh viên
+function get_user($id)
+{
+    // Gọi tới biến toàn cục $conn
+    global $conn;
+    
+    // Hàm kết nối
+    connect_db();
+    
+    $sql = "select * from ACCOUNTS where acc_id=$id";
+    
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_array($query,MYSQLI_ASSOC);
+    
+//    $user_name = $row['acc_username'];
+//    $user_fullname = $row['acc_fullname'];
+//    $user_email = $row['acc_email'];
+//    $user_phone = $row['acc_phone'];
+//    $user_pass = $row['acc_password'];
+//    $user_role = $row['acc_role'];
+//    // Mảng chứa kết quả
+//    $result = array();
+//    
+//    // Lặp qua từng record và đưa vào biến kết quả
+//    if ($query){
+//        while ($row = mysqli_fetch_assoc($query)){
+//            $result[] = $row;
+//        }
+//    }
+//    
+    // Trả kết quả về
+    return $row;
 }
 
 ?>

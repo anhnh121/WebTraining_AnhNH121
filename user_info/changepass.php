@@ -63,6 +63,7 @@
    <body>
         <div class="topnav">
             <a class="active" href="../login/welcome.php">Profile</a>
+            <a href="../user_info/userlist.php">Danh sách người dùng</a>
             <?php 
                 if($login_role == 0){
                     echo "<a href='../user_info/qlsv.php'>Quản lý Sinh viên</a>";

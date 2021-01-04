@@ -52,6 +52,7 @@
    <body>
         <div class="topnav">
             <a href="../login/welcome.php">Profile</a>
+            <a href="../user_info/userlist.php">Danh sách người dùng</a>
             <a class="active" href="qlsv.php">Quản lý Sinh viên</a>
             <a href="#homework">Giao bài tập</a>
             <a href="#inbox">Hòm thư</a>
