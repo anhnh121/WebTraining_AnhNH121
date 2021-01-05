@@ -258,7 +258,6 @@ function get_all_users($id)
     return $result;
 }
 
-// Hàm lấy tất cả sinh viên
 function get_user($id)
 {
     // Gọi tới biến toàn cục $conn
@@ -272,25 +271,28 @@ function get_user($id)
     // Thực hiện câu truy vấn
     $query = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($query,MYSQLI_ASSOC);
-    
-//    $user_name = $row['acc_username'];
-//    $user_fullname = $row['acc_fullname'];
-//    $user_email = $row['acc_email'];
-//    $user_phone = $row['acc_phone'];
-//    $user_pass = $row['acc_password'];
-//    $user_role = $row['acc_role'];
-//    // Mảng chứa kết quả
-//    $result = array();
-//    
-//    // Lặp qua từng record và đưa vào biến kết quả
-//    if ($query){
-//        while ($row = mysqli_fetch_assoc($query)){
-//            $result[] = $row;
-//        }
-//    }
-//    
-    // Trả kết quả về
+
     return $row;
 }
 
+function sendmsg($add_msg, $add_sender, $add_recver, $add_time){
+    // Gọi tới biến toàn cục $conn
+    global $conn;
+     
+    // Hàm kết nối
+    connect_db();
+     
+    // Chống SQL Injection
+    $msg = addslashes($add_msg);
+    $sender = addslashes($add_sender);
+    $recver = addslashes($add_recver);
+    $time = addslashes($add_time);
+     
+    $sql = "INSERT INTO MSG(msg_msg, msg_idsender, msg_idrecver, msg_time) VALUES
+            ('$msg','$sender','$recver','$time')";
+
+    $query = mysqli_query($conn, $sql);  
+    $error = "Send OK";        
+    Alert($error);
+}
 ?>

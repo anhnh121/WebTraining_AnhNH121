@@ -1,5 +1,4 @@
 <?php
-
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -110,7 +109,7 @@
                             <td><?php echo $item['acc_username'];?></td>
                             <td><?php echo $item['acc_fullname'];?></td>
                             <td><?php echo $user_role;?></td>
-                            <td><a href="../msg/msg.php?acc_row=<?php echo $acc_idrow; ?>">Details</a></td>
+                            <td><a href="msg.php?acc_row=<?php echo $acc_idrow; ?>">Details</a></td>
                         </tr>   
                         </form>
                   <?php } ?>      
