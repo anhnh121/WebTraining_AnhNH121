@@ -86,7 +86,7 @@
                     echo "<a href='#bt'>Bài tập</a>";
                 }
             ?>   
-            <a href="#inbox">Hòm thư</a>
+            <a href="../msg/inbox.php">Hòm thư</a>
             <div class="topnav-right">
                 <a style="color: crimson"><?php echo $role . ": ". $login_name; ?></a>
                 <a href = "../login/logout.php">Sign Out</a>

@@ -1,4 +1,5 @@
 <?php
+
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,13 +11,19 @@
     session_start(); 
     
     $db = connect_db();
-    $login_name = $_SESSION['login_user'];
-    $ses_sql = mysqli_query($db,"select * from ACCOUNTS where acc_username = '$login_name' ");
+    $user_check = $_SESSION['login_user'];
+    $ses_sql = mysqli_query($db,"select * from ACCOUNTS where acc_username = '$user_check' ");
     $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
-    $login_role = $row['acc_role'];
     $login_id = $row['acc_id'];
-    $users = get_all_users($login_id);
-                    
+    $login_name = $row['acc_username'];
+    $login_role = $row['acc_role'];
+    $login_fullname = $row['acc_fullname'];
+    $login_email = $row['acc_email'];
+    $login_phone = $row['acc_phone'];
+    $login_pass = $row['acc_password'];
+    
+    $msg_aray = get_all_msg($login_id, "outbox");
+    
     if($login_role == 0){
         $role = "Teacher";
     } else{
@@ -27,8 +34,15 @@
        header("location:login.php");
        die();
     }
-  
-    disconnect_db();
+    
+    if(filter_input(INPUT_SERVER,'REQUEST_METHOD') === "POST") {     
+        if(isset($_POST['deleteItem']) AND is_numeric($_POST['deleteItem'])){
+            $delete_id = filter_input(INPUT_POST, 'deleteItem');
+            delete_msg($delete_id);       
+        }
+        echo "<meta http-equiv='refresh' content='0'>";
+    }
+
 ?>
 <html>
    <head>
@@ -42,6 +56,7 @@
                 border-spacing: 0;
                 width: 100%;
                 border: 1px solid black;
+                overflow: scroll;
               
             }
 
@@ -56,7 +71,8 @@
             }
 
             tr:nth-child(even){
-/*                background-color: #f2f2f2;*/
+/*                background-color: #pink;*/
+                
             }
         </style>
    </head>
@@ -64,56 +80,55 @@
    <body>
         <div class="topnav">
             <a href="../login/welcome.php">Profile</a>
-            <a class='active' href="../user_info/userlist.php">Danh sách người dùng</a>
+            <a href="../user_info/userlist.php">Danh sách người dùng</a>
             <?php 
                 if($login_role == 0){
                     echo "<a href='../user_info/qlsv.php'>Quản lý Sinh viên</a>";
                     echo "<a href='#homework'>Giao bài tập</a>";            
                 }else{
-//                    echo "<a href='../user_info/qlsv.php'>Thông tin Sinh viên</a>";
                     echo "<a href='#bt'>Bài tập</a>";
                 }
             ?>   
-            <a href="../msg/inbox.php">Hòm thư</a>
+            <a class="active" href="../msg/inbox.php">Hòm thư</a>
             <div class="topnav-right">
                 <a style="color: crimson"><?php echo $role . ": ". $login_name; ?></a>
                 <a href = "../login/logout.php">Sign Out</a>
             </div>
         </div>
         <div class="tab">
+            <a href="../msg/inbox.php">Inbox</a>
+            <a class="active" href="../msg/outbox.php">Outbox</a>
         </div>
-        <div><a style="color:#45a049;font-size: 50px;">Danh sách người dùng</a></div>
-        <div class="info" style="overflow-x:auto; padding-left: 150px;">
-              <table>
+        <div><a style="color:#45a049;font-size: 50px;">Outbox</a></div>
+        <div class="info" style="overflow-x:auto; overflow-y: auto; padding-left: 150px;">
+            <table>
                 <tr style="background-color: #006600; color: pink;">
                   <th>STT</th>
-                  <th>User Name</th>
-                  <th>Full Name</th>
-                  <th>Role</th>
-                  <th>Details</th>
+                  <th>Sent To</th>
+                  <th>Msg</th>
+                  <th>Time</th>
+                  <th>Actions</th>
                 </tr>
                 <?php
                     $i=0;
-                    foreach ($users as $item){
-                        $i++; 
-                        if($item['acc_role'] == 0){
-                            $user_role = "Teacher";
-                        } else{
-                            $user_role = "Student";
-                        }
-                        $acc_idrow=$item['acc_id'];
+                    foreach ($msg_aray as $item){$i++; 
+                        $recverid =  $item['msg_idrecver'];
+                        $user_recver = get_user($recverid);
+                        $recver = $user_recver['acc_username'];
                 ?>
-                        <form action="qlsv.php" method ="post">
-                        <tr>
+                        <form action="outbox.php" method ="post">
+                        <tr style="overflow: scroll;">
                             <td><?php echo $i; ?></td>
-                            <td><?php echo $item['acc_username'];?></td>
-                            <td><?php echo $item['acc_fullname'];?></td>
-                            <td><?php echo $user_role;?></td>
-                            <td><a href="../user_info/msg.php?acc_row=<?php echo $acc_idrow; ?>">Details</a></td>
+                            <td><input disabled style="width: 90%;" type="text" id="username" name="username" value="<?php echo $recver;?>" ></td>
+                            <td><input disabled style="width: 90%;" type="text" id="password" name="password" value="<?php echo $item['msg_msg'];?>"></td>
+                            <td><input disabled style="width: 90%;" type="text" id="fullname" name="fullname" value="<?php echo $item['msg_time'];?>"></td>
+                            <td>
+                                <button type="submit" name="deleteItem" value="<?php echo $item['msg_id'];?>">Delete</button>
+                            </td>
                         </tr>   
                         </form>
-                  <?php } ?>      
-              </table>
+                <?php } ?>
+            </table>
         </div>
        
    </body>

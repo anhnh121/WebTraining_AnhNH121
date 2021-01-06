@@ -295,4 +295,53 @@ function sendmsg($add_msg, $add_sender, $add_recver, $add_time){
     $error = "Send OK";        
     Alert($error);
 }
+
+function get_all_msg($msgid, $in_out){
+    
+    // Gọi tới biến toàn cục $conn
+    global $conn;
+    
+    // Hàm kết nối
+    connect_db();
+    
+    if($in_out === "outbox"){
+        $sql = "select * from MSG where msg_idsender=$msgid";
+    } else {
+        $sql = "select * from MSG where msg_idrecver=$msgid";
+    }
+    
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $sql);
+    
+    // Mảng chứa kết quả
+    $result = array();
+    
+    // Lặp qua từng record và đưa vào biến kết quả
+    if ($query){
+        while ($row = mysqli_fetch_assoc($query)){
+            $result[] = $row;
+        }
+    }
+    
+    // Trả kết quả về
+    return $result;
+}
+
+function delete_msg($delete_id){
+    // Gọi tới biến toàn cục $conn
+    global $conn;
+    
+    // Hàm kết nối
+    connect_db();
+    
+    $sql = "
+            DELETE FROM MSG
+            WHERE msg_id = $delete_id
+    ";
+    
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $sql);
+    
+    return $query;
+}
 ?>

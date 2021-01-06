@@ -53,21 +53,21 @@
         <div class="topnav">
             <a href="../login/welcome.php">Profile</a>
             <a href="../user_info/userlist.php">Danh sách người dùng</a>
-            <a class="active" href="qlsv.php">Quản lý Sinh viên</a>
+            <a class="active" href="../user_info/qlsv.php">Quản lý Sinh viên</a>
             <a href="#homework">Giao bài tập</a>
-            <a href="#inbox">Hòm thư</a>
+            <a href="../msg/inbox.php">Hòm thư</a>
             <div class="topnav-right">
                 <a style="color: crimson"><?php echo $role . ": ". $login_name; ?></a>
                 <a href = "../login/logout.php">Sign Out</a>
             </div>
         </div>
         <div class="tab">
-            <a href="qlsv.php">Cập nhật sinh viên</a>
-            <a class="active" href="adduser.php">Thêm sinh viên</a>
+            <a href="../user_info/qlsv.php">Cập nhật sinh viên</a>
+            <a class="active" href="../user_info/adduser.php">Thêm sinh viên</a>
         </div>
         <div><a style="color:#45a049;font-size: 50px;">Thêm sinh viên</a></div>
         <div class="info">
-            <form action="adduser.php" method="post">
+            <form action="../user_info/adduser.php" method="post">
                 <label for="uname">User Name</label><br>
                 <input type="text" id="uname" name="username"><br>
                 
@@ -78,7 +78,7 @@
                 <input type="text" id="fname" name="fullname"><br>
                    
                 <label for="email">Email</label><br>
-                <input type="text" id="email" name="email""><br>
+                <input type="text" id="email" name="email"><br>
                 
                 <label for="phone">Phone</label><br>
                 <input type="text" id="phone" name="phone"><br>

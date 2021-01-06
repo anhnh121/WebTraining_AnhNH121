@@ -33,7 +33,7 @@
     }
     
     
-    echo "<meta http-equiv='refresh' content='0'>";
+//    echo "<meta http-equiv='refresh' content='0'>";
 ?>
 <html>
    <head>
@@ -45,8 +45,8 @@
    
    <body>
         <div class="topnav">
-            <a class="active" href="./welcome.php">Profile</a>
-            <a class="active" href="../user_info/userlist.php">Danh sách người dùng</a>
+            <a href="../login/welcome.php">Profile</a>
+            <a href="../user_info/userlist.php">Danh sách người dùng</a>
             <?php 
                 if($login_role == 0){
                     echo "<a href='../user_info/qlsv.php'>Quản lý Sinh viên</a>";
@@ -55,18 +55,18 @@
                     echo "<a href='#bt'>Bài tập</a>";
                 }
             ?>   
-            <a href="#inbox">Hòm thư</a>
+            <a class="active" href="../msg/inbox.php">Hòm thư</a>
             <div class="topnav-right">
                 <a style="color: crimson"><?php echo $role . ": ". $login_name; ?></a>
-                <a href = "logout.php">Sign Out</a>
+                <a href = "../login/logout.php">Sign Out</a>
             </div>
         </div>
         <div class="tab">
-            <a class="active" href="./welcome.php">Thông tin cá nhân</a>
-            <a href="../user_info/changepass.php">Đổi mật khẩu</a>
+            <a href="../msg/inbox.php">Inbox</a>
+            <a class="active" href="../msg/outbox.php">Outbox</a>
         </div>
-        <div><a style="color:#45a049;font-size: 50px;">Cập nhật thông tin</a></div>
-        <div class="info">
+        <div><a style="color:#45a049;font-size: 50px;">Outbox</a></div>
+        <div class="info" style="overflow-x:auto; overflow-y: auto; padding-left: 150px;">
             
         </div>
        

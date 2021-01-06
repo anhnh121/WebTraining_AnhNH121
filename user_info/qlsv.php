@@ -92,7 +92,7 @@
                     echo "<a href='#bt'>Bài tập</a>";
                 }
             ?>   
-            <a href="#inbox">Hòm thư</a>
+            <a href="../msg/inbox.php">Hòm thư</a>
             <div class="topnav-right">
                 <a style="color: crimson"><?php echo $role . ": ". $login_name; ?></a>
                 <a href = "../login/logout.php">Sign Out</a>
@@ -100,7 +100,7 @@
         </div>
         <div class="tab">
             <a class="active" href="qlsv.php">Cập nhật sinh viên</a>
-            <a href="adduser.php">Thêm sinh viên</a>
+            <a href="../user_info/adduser.php">Thêm sinh viên</a>
         </div>
         <div><a style="color:#45a049;font-size: 50px;">Cập nhật sinh viên</a></div>
         <div class="info" style="overflow-x:auto; padding-left: 150px;">
