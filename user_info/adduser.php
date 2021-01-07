@@ -54,8 +54,9 @@
             <a href="../login/welcome.php">Profile</a>
             <a href="../user_info/userlist.php">Danh sách người dùng</a>
             <a class="active" href="../user_info/qlsv.php">Quản lý Sinh viên</a>
-            <a href="#homework">Giao bài tập</a>
+            <a href="../homework/up_homework.php">Giao bài tập</a>
             <a href="../msg/inbox.php">Hòm thư</a>
+            <a href="../game/game.php">Game</a>
             <div class="topnav-right">
                 <a style="color: crimson"><?php echo $role . ": ". $login_name; ?></a>
                 <a href = "../login/logout.php">Sign Out</a>

@@ -8,6 +8,7 @@
     //include('session.php');
     require '../connectDB.php';
     require '../Util.php';
+    require '../homework/download.php';
     session_start(); 
     
     $db = connect_db();
@@ -32,25 +33,8 @@
        die();
     }
     
-    if(filter_input(INPUT_SERVER,'REQUEST_METHOD') === "POST") {
-        $oldpass = filter_input(INPUT_POST, 'oldpass');
-        $newpass = filter_input(INPUT_POST, 'newpass');
-        $repass = filter_input(INPUT_POST, 'repass');
-        $update_pass = addslashes($newpass);
-        if(($oldpass !== $login_pass) or ($oldpass === $newpass)){
-            $error = "Your Password is invalid";
-            phpAlert($error);
-        } elseif ($newpass !== $repass) {
-            $error = "You entered two different passwords";
-            phpAlert($error);
-        } else{
-            $update_sql = mysqli_query($db,"UPDATE ACCOUNTS SET acc_password='$update_pass' WHERE acc_id='$login_id' ");
-            $error = "Change Password OK";
-            phpAlert($error);
-        }
-        echo "<meta http-equiv='refresh' content='0'>";
-    }
     
+//    echo "<meta http-equiv='refresh' content='0'>";
 ?>
 <html>
    <head>
@@ -62,12 +46,12 @@
    
    <body>
         <div class="topnav">
-            <a class="active" href="../login/welcome.php">Profile</a>
+            <a href="../login/welcome.php">Profile</a>
             <a href="../user_info/userlist.php">Danh sách người dùng</a>
             <?php 
                 if($login_role == 0){
                     echo "<a href='../user_info/qlsv.php'>Quản lý Sinh viên</a>";
-                    echo "<a href='../homework/up_homework.php'>Giao bài tập</a>";            
+                    echo "<a class='active' href='../homework/up_homework.php'>Giao bài tập</a>";            
                 }else{
                     echo "<a href='../homework/homework.php'>Bài tập</a>";
                 }
@@ -80,22 +64,26 @@
             </div>
         </div>
         <div class="tab">
-            <a href="../login/welcome.php">Thông tin cá nhân</a>
-            <a class="active" href="../user_info/changepass.php">Đổi mật khẩu</a>
+            <a class="active" href='../homework/homework.php'>Upload Homework</a>
+            <a href="#KQ">Danh sách bài làm</a>
         </div>
-        <div><a style="color:#45a049;font-size: 50px;">Đổi mật khẩu</a></div>
-        <div class="info">
-            <form action="../user_info/changepass.php" method = "post">
-                <label for="old">Current Password</label><br>
-                <input type="password" id="oldpass" name="oldpass"><br>
-
-                <label for="new">New Password</label><br>
-                <input type="password" id="newpass" name="newpass"><br>
-                
-                <label for="re">Re-Enter Password</label><br>
-                <input type="password" id="repass" name="repass"><br>
-                
-                <input type="submit" value="Submit"><br>
+        <div><a style="color:#45a049;font-size: 50px;">Upload Homework</a></div>
+        <div class="info" style="overflow-x:auto; overflow-y: auto; padding-left: 150px;">
+            <form method="POST" enctype="multipart/form-data" action="../homework/upload.php">
+                <label for="uname">Homework</label><br>
+                <input type="text" id="homework" name="homework"><br>
+                <input type="file" name="file_homework"><br>
+                <input type="submit" name="upload" value="Upload"><br>
+                <?php 
+                    $files = scandir("../uploads/homework");
+                    for ($i = 2; $i < count($files); $i++){
+                ?>
+                        <p>
+                            <a download="<?php echo $files[$i] ?>" href="../uploads/homework/<?php echo $files[$i] ?>"><?php echo $files[$i] ?></a>
+                        </p>
+                <?php        
+                    }
+                ?>
             </form>
         </div>
        

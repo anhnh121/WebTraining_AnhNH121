@@ -9,4 +9,12 @@
 function phpAlert($msg) {
     echo '<script type="text/javascript">alert("' . $msg . '")</script>';
 }
+
+function phpAlert2($msg, $location) {
+    echo '<script type="text/javascript">alert("' . $msg . '"); location = "' . $location . '";</script>';
+}
+
+function scriptLocation($location){
+    echo '<script type="text/javascript">location = "' . $location . '";</script>';
+}
 ?>

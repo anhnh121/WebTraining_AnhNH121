@@ -29,6 +29,12 @@ and open the template in the editor.
     padding: 12px 20px;
     margin: 8px 0;
 }
+.info input[type=file], select{
+  width: 60%;
+  padding: 12px 20px;
+  margin: 8px 0;
+}
+
 .info input[type=password], select {
   width: 60%;
   padding: 12px 20px;
