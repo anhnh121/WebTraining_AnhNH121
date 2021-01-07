@@ -97,9 +97,9 @@
         </div>
         <div class="tab">
             <a href="../msg/inbox.php">Inbox</a>
-            <a class="active" href="../msg/outbox.php">Outbox</a>
+            <a class="active" href="../msg/outbox.php">Sent</a>
         </div>
-        <div><a style="color:#45a049;font-size: 50px;">Outbox</a></div>
+        <div><a style="color:#45a049;font-size: 50px;">Sent</a></div>
         <div class="info" style="overflow-x:auto; overflow-y: auto; padding-left: 150px;">
             <table>
                 <tr style="background-color: #006600; color: pink;">

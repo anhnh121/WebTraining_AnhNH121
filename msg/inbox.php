@@ -21,6 +21,9 @@
     $login_email = $row['acc_email'];
     $login_phone = $row['acc_phone'];
     $login_pass = $row['acc_password'];
+    
+    $msg_aray = get_all_msg($login_id, "inbox");
+    
     if($login_role == 0){
         $role = "Teacher";
     } else{
@@ -32,15 +35,46 @@
        die();
     }
     
-    
-    echo "<meta http-equiv='refresh' content='0'>";
+//    if(filter_input(INPUT_SERVER,'REQUEST_METHOD') === "POST") {     
+//        if(isset($_POST['deleteItem']) AND is_numeric($_POST['deleteItem'])){
+//            $delete_id = filter_input(INPUT_POST, 'deleteItem');
+//            delete_msg($delete_id);       
+//        }
+//        echo "<meta http-equiv='refresh' content='0'>";
+//    }
 ?>
 <html>
    <head>
-      <title>Welcome </title>
-      <link rel="stylesheet" type="text/css" href="../topnav.css" />
-      <link rel="stylesheet" type="text/css" href="../sidenav.css" />
-      <link rel="stylesheet" type="text/css" href="../user_info/update_info.css" />
+        <title>Welcome </title>
+        <link rel="stylesheet" type="text/css" href="../topnav.css" />
+        <link rel="stylesheet" type="text/css" href="../sidenav.css" />
+        <link rel="stylesheet" type="text/css" href="../user_info/update_info.css" />
+
+        <style>
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+                width: 100%;
+                border: 1px solid black;
+                overflow: scroll;
+              
+            }
+
+            th, td {
+                text-align: center;
+                padding-top: 8px;
+                padding-right: 2px;
+                padding-bottom: 2px;
+                padding-left: 2px;
+                border: 1px solid black;
+                white-space: nowrap;
+            }
+
+            tr:nth-child(even){
+/*                background-color: #pink;*/
+                
+            }
+        </style>
    </head>
    
    <body>
@@ -63,11 +97,39 @@
         </div>
         <div class="tab">
             <a class="active" href="../msg/inbox.php">Inbox</a>
-            <a href="../msg/outbox.php">OutBox</a>
+            <a href="../msg/outbox.php">Sent</a>
         </div>
         <div><a style="color:#45a049;font-size: 50px;">Inbox</a></div>
-        <div class="info">
-            
+        <div class="info" style="overflow-x:auto; overflow-y: auto; padding-left: 150px;">
+            <table>
+                <tr style="background-color: #006600; color: pink;">
+                  <th>STT</th>
+                  <th>Recv From</th>
+                  <th>Msg</th>
+                  <th>Time</th>
+<!--                  <th>Actions</th>-->
+                </tr>
+                <?php
+                    $i=0;
+                    foreach ($msg_aray as $item){$i++; 
+                        $senderid =  $item['msg_idsender'];
+                        $user_sender = get_user($senderid);
+                        $sender = $user_sender['acc_username'];
+                ?>
+<!--                        <form action="outbox.php" method ="post">-->
+                        <form>
+                        <tr style="overflow: scroll;">
+                            <td><?php echo $i; ?></td>
+                            <td><input disabled style="width: 90%;" type="text" id="username" name="username" value="<?php echo $sender;?>" ></td>
+                            <td><input disabled style="width: 90%;" type="text" id="password" name="password" value="<?php echo $item['msg_msg'];?>"></td>
+                            <td><input disabled style="width: 90%;" type="text" id="fullname" name="fullname" value="<?php echo $item['msg_time'];?>"></td>
+<!--                            <td>
+                                <button type="submit" name="deleteItem" value="<?php echo $item['msg_id'];?>">Delete</button>
+                            </td>-->
+                        </tr>   
+                        </form>
+                <?php } ?>
+            </table>
         </div>
        
    </body>

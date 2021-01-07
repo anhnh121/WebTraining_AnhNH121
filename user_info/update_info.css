@@ -14,7 +14,6 @@ and open the template in the editor.
   padding-right: 30px;
   padding-bottom: 50px;
   padding-left: 320px;
-  overflow: scroll;
 
 }
 .info input[type=text], select {
@@ -29,7 +28,6 @@ and open the template in the editor.
 .info input[type=textarea], select{
     padding: 12px 20px;
     margin: 8px 0;
-    overflow: scroll;
 }
 .info input[type=password], select {
   width: 60%;
