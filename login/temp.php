@@ -41,6 +41,31 @@
       <link rel="stylesheet" type="text/css" href="../topnav.css" />
       <link rel="stylesheet" type="text/css" href="../sidenav.css" />
       <link rel="stylesheet" type="text/css" href="../user_info/update_info.css" />
+      <style>
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+                width: 100%;
+                border: 1px solid black;
+                overflow: scroll;
+              
+            }
+
+            th, td {
+                text-align: center;
+                padding-top: 8px;
+                padding-right: 2px;
+                padding-bottom: 2px;
+                padding-left: 2px;
+                border: 1px solid black;
+                white-space: nowrap;
+            }
+
+            tr:nth-child(even){
+/*                background-color: #pink;*/
+                
+            }
+        </style>
    </head>
    
    <body>
@@ -68,7 +93,28 @@
         </div>
         <div><a style="color:#45a049;font-size: 50px;">Outbox</a></div>
         <div class="info" style="overflow-x:auto; overflow-y: auto; padding-left: 150px;">
-            
+            <table>
+                <tr style="background-color: #006600; color: pink;">
+                  <th>STT</th>
+                  <th>Sent To</th>
+                  <th>Msg</th>
+                  <th>Time</th>
+                  <th>Actions</th>
+                </tr>
+                </<tr>
+                    <td>cell</td>
+                    <td>cell</td>
+                    <td>cell</td>
+                    <td>cell</td> 
+                    <td>
+                        <table>
+                            <tr><td>1</td></tr>
+                            <tr><td>2</td></tr>
+                            <tr><td>3</td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
         </div>
        
    </body>

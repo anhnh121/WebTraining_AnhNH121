@@ -33,6 +33,7 @@ and open the template in the editor.
   width: 60%;
   padding: 12px 20px;
   margin: 8px 0;
+  border: 1px solid #ccc;
 }
 
 .info input[type=password], select {

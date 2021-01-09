@@ -66,6 +66,25 @@ function init_db()
         FOREIGN KEY (msg_idrecver) REFERENCES ACCOUNTS(acc_id)
         )";
     
+    $sql_create3 = "CREATE TABLE IF NOT EXISTS HOMEWORKS(
+	hw_id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	hw_title varchar(255) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
+        hw_path varchar(255) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
+	hw_teacherid int(11) NOT NULL,
+        hw_uptime varchar(255) COLLATE utf8_unicode_ci,
+        FOREIGN KEY (hw_teacherid) REFERENCES ACCOUNTS(acc_id)
+        )";
+        
+    $sql_create4 = "CREATE TABLE IF NOT EXISTS RESULTS(
+	kq_id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	kq_studentid int(11) NOT NULL,
+	kq_homeworkid int(11) NOT NULL,
+        kq_path varchar(255) COLLATE utf8_unicode_ci NOT NULL UNIQUE,
+        kq_uptime varchar(255) COLLATE utf8_unicode_ci,
+        FOREIGN KEY (kq_studentid) REFERENCES ACCOUNTS(acc_id),
+        FOREIGN KEY (kq_homeworkid) REFERENCES HOMEWORKS(hw_id)
+        )";
+    
     $sql_insert = "INSERT INTO ACCOUNTS (acc_id, acc_username, acc_password, acc_fullname, acc_email, acc_phone, acc_role) VALUES
                                         (1, 'teacher1', '123456a@A', 'Nguyen Van A', 'uchiha1610@gmail.com', '0123456789', 0),
                                         (2, 'teacher2', '123456a@A', 'Nguyen Thi B', 'sharingan121@gmail.com', '0123456789', 0),
@@ -73,17 +92,22 @@ function init_db()
                                         (4, 'student2', '123456a@A', 'Nguyen Thi D', 'bankai2020@gmail.com', '0123456789', 1)";
     // Hàm kết nối
     connect_db();
+    $query1 = mysqli_query($conn, $sql_create);
+    $query2 = mysqli_query($conn, $sql_create2);
+    $query3 = mysqli_query($conn, $sql_create3);
+    $query4 = mysqli_query($conn, $sql_create4);
     
-//    // Câu truy vấn kiểm tra bảng có tồn tại không
-    $sql_check = "SHOW TABLES LIKE 'ACCOUNTS'";
-    $result = mysqli_query($conn, $sql_check);
-    $rowcount=mysqli_num_rows($result);
-    // Nếu chưa tồn tại 
-    if($rowcount < 1){
-        $query1 = mysqli_query($conn, $sql_create);
-        $query2 = mysqli_query($conn, $sql_create2);
-        $query3 = mysqli_query($conn, $sql_insert);
-    }
+    $query = mysqli_query($conn, $sql_insert);
+////    // Câu truy vấn kiểm tra bảng có tồn tại không
+//    $sql_check = "SHOW TABLES LIKE 'ACCOUNTS'";
+//    $result = mysqli_query($conn, $sql_check);
+//    $rowcount=mysqli_num_rows($result);
+//    // Nếu chưa tồn tại 
+//    if($rowcount < 1){
+//        $query1 = mysqli_query($conn, $sql_create);
+//        $query2 = mysqli_query($conn, $sql_create2);
+//        $query3 = mysqli_query($conn, $sql_insert);
+//    }
     
     disconnect_db();
     //return $query2; 
@@ -343,5 +367,60 @@ function delete_msg($delete_id){
     $query = mysqli_query($conn, $sql);
     
     return $query;
+}
+
+function add_homework($title, $path, $teacherid){
+    global $conn;
+    
+    connect_db();
+    // Chống SQL Injection
+    $add_title = addslashes($title);
+    $add_path = addslashes($path);
+    date_default_timezone_set("Asia/Ho_Chi_Minh");
+    $time = date("h:i:sa d-m-Y");
+    
+    $sql = "
+        INSERT INTO HOMEWORKS(hw_title, hw_path, hw_teacherid, hw_uptime) VALUES
+        ('$add_title','$add_path','$teacherid', '$time')";
+    
+    $sql_t = "SELECT * FROM HOMEWORKS WHERE hw_title='$add_title'";
+    $sql_p = "SELECT * FROM HOMEWORKS WHERE hw_path='$add_path'"; 
+    
+    $res_t = mysqli_query($conn, $sql_t);
+    $res_p = mysqli_query($conn, $sql_p);
+    $error = null;
+    if ((mysqli_num_rows($res_t) > 0) or (mysqli_num_rows($res_p) > 0)) {
+        $error = "Sorry... File or Title already taken"; 	 	
+    }else{
+        $query = mysqli_query($conn, $sql);
+        $error = "Upload OK !!!";
+    }
+    
+    return $error;
+    
+}
+
+function get_all_homeworks(){
+        // Gọi tới biến toàn cục $conn
+    global $conn;
+    
+    // Hàm kết nối
+    connect_db();
+    
+    $sql = "select * from HOMEWORKS";
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $sql);
+    
+    // Mảng chứa kết quả
+    $result = array();
+    
+    // Lặp qua từng record và đưa vào biến kết quả
+    if ($query){
+        while ($row = mysqli_fetch_assoc($query)){
+            $result[] = $row;
+        }
+    }
+    // Trả kết quả về
+    return $result;
 }
 ?>

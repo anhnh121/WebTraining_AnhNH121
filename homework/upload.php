@@ -10,6 +10,7 @@ require '../connectDB.php';
 
 $file = $_FILES["file_homework"];
 
+$uploader_id = filter_input(INPUT_POST, 'upload');
 // Saving file in uploads folder
 $filename = filter_input(INPUT_POST, 'homework');
 $size = $file["size"];
@@ -22,7 +23,7 @@ if(!in_array($ext, ['zip', 'pdf', 'doc', 'docx', 'txt'])){
     
     $dest_homework = "../uploads/homework/".$filename.".".$ext;
     if(move_uploaded_file($file["tmp_name"], $dest_homework)){
-        $msg = "Upload OK !!!";
+        $msg = add_homework($filename, $dest_homework, $uploader_id); 
     }
     else{
         $msg = "Upload Failed !!!";
