@@ -75,17 +75,7 @@
                 <input type="file" name="file_homework"><br>
                 <button style="background-color: #4CAF50; width: 60%; padding: 14px 20px; margin: 8px 0;color: white; 
                         border: none; border-radius: 4px; cursor: pointer;"
-                        type="submit" name="upload" value="<?php echo $login_id;?>">Upload</button><br>
-                <?php 
-                    $files = scandir("../uploads/homework");
-                    for ($i = 2; $i < count($files); $i++){
-                ?>
-                        <p>
-                            <a download="<?php echo $files[$i] ?>" href="../uploads/homework/<?php echo $files[$i] ?>"><?php echo $files[$i] ?></a>
-                        </p>
-                <?php        
-                    }
-                ?>
+                        type="submit" name="uploadhw" value="<?php echo $login_id;?>">Upload</button><br>
             </form>
         </div>
        

@@ -88,10 +88,10 @@
             </div>
         </div>
         <div class="tab">
-            <a href="../msg/inbox.php">Inbox</a>
-            <a class="active" href="../msg/outbox.php">Outbox</a>
+<!--            <a href="../msg/inbox.php">Inbox</a>
+            <a class="active" href="../msg/outbox.php">Outbox</a>-->
         </div>
-        <div><a style="color:#45a049;font-size: 50px;">Outbox</a></div>
+        <div><a style="color:#45a049;font-size: 50px;">Danh sách bài tập</a></div>
         <div class="info" style="overflow-x:auto; overflow-y: auto; padding-left: 150px;">
             <table>
                 <tr style="background-color: #006600; color: pink;">
@@ -99,8 +99,9 @@
                   <th>Title</th>
                   <th>Teacher</th>
                   <th>TimeUpload</th>
-                  <th>File</th>
-                  <th>Result</th>
+                  <th>File BT</th>
+                  <th>Bài làm</th>
+                  <th>Actions</th>
                 </tr>
                 <?php
                     $i=0;
@@ -111,14 +112,15 @@
                         $teacher_name = $user_upload['acc_username'];
                         $onlyname = basename($item['hw_path']);
                 ?>
-                        <form>
+                        <form method="POST" enctype="multipart/form-data" action="../homework/upload.php">
                         <tr>
                             <td><?php echo $i; ?></td>
                             <td><?php echo $item['hw_title'];?></td>
                             <td><?php echo $teacher_name;?></td>
                             <td><?php echo $item['hw_uptime'];?></td>
                             <td><a download="<?php echo $onlyname ?>" href="../uploads/homework/<?php echo $onlyname ?>"><?php echo $onlyname ?></a></td>
-                            <td>Result</td>
+                            <td><input type="file" name="file_result"></td>
+                            <td><button type="submit" name="up_result" value="<?php echo $item['hw_id'];?>">Nộp bài</button></td>
                         </tr>   
                         </form>
                   <?php } ?> 

@@ -211,7 +211,9 @@ function delete_student($student_id)
     
     // Hàm kết nối
     connect_db();
-    
+    // Delete all foreign key in table
+    delete_usermsg($student_id);
+    delete_userrs($student_id);
     // Câu truy van
     $sql = "
             DELETE FROM ACCOUNTS
@@ -369,6 +371,66 @@ function delete_msg($delete_id){
     return $query;
 }
 
+function delete_usermsg($user_id)
+{
+    // Gọi tới biến toàn cục $conn
+    global $conn;
+    
+    // Hàm kết nối
+    connect_db();
+    
+    // Câu truy van
+    $sql = "
+            DELETE FROM MSG
+            WHERE msg_idsender = $user_id OR msg_idrecver=$user_id
+    ";
+    
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $sql);
+    
+    return $query;
+}
+//
+//function delete_userhw($user_id)
+//{
+//    // Gọi tới biến toàn cục $conn
+//    global $conn;
+//    
+//    // Hàm kết nối
+//    connect_db();
+//    
+//    // Câu truy van
+//    $sql = "
+//            DELETE FROM HOMEWORKS
+//            WHERE hw_teacherid = $user_id
+//    ";
+//    
+//    // Thực hiện câu truy vấn
+//    $query = mysqli_query($conn, $sql);
+//    
+//    return $query;
+//}
+
+function delete_userrs($id)
+{
+    // Gọi tới biến toàn cục $conn
+    global $conn;
+    
+    // Hàm kết nối
+    connect_db();
+    
+    $sql = "
+    DELETE FROM RESULTS
+    WHERE kq_studentid = $id
+    ";
+   
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $sql);
+    
+    return $query;
+}
+
+
 function add_homework($title, $path, $teacherid){
     global $conn;
     
@@ -398,6 +460,30 @@ function add_homework($title, $path, $teacherid){
     
     return $error;
     
+}
+
+function add_result($uploader_id,$homeworkid, $dest_homework){
+    global $conn;
+    
+    connect_db();
+    // Chống SQL Injection
+    $add_path = addslashes($dest_homework);
+    date_default_timezone_set("Asia/Ho_Chi_Minh");
+    $time = date("h:i:sa d-m-Y");
+    $sql = "
+        INSERT INTO RESULTS(kq_studentid, kq_homeworkid, kq_path, kq_uptime) VALUES
+        ('$uploader_id','$homeworkid','$dest_homework', '$time')";
+    
+    $sql_t = "SELECT * FROM RESULTS WHERE kq_path='$dest_homework'";
+    $res_t = mysqli_query($conn, $sql_t);
+    if ((mysqli_num_rows($res_t) > 0)) {
+        $error = "Sorry... Homework already submited"; 	 	
+    }else{
+        $query = mysqli_query($conn, $sql);
+        $error = "Upload OK !!!";
+    }
+    
+    return $error;
 }
 
 function get_all_homeworks(){
