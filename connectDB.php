@@ -635,4 +635,34 @@ function get_all_challenge(){
     return $result;
 }
 
+function update_msg($update_msgid, $update_msg){
+    global $conn;
+    
+    connect_db();
+    // Chống SQL Injection
+    $u_msg = addslashes($update_msg);
+    
+    date_default_timezone_set("Asia/Ho_Chi_Minh");
+    $time = date("h:i:sa d-m-Y");
+    
+    $sql = "
+        UPDATE MSG SET
+        msg_msg = '$u_msg',
+        msg_time = '$time'
+        WHERE msg_id = '$update_msgid'";
+    
+    $sql_u = "SELECT * FROM MSG WHERE msg_id = '$update_msgid'";
+ 
+    $query = mysqli_query($conn, $sql_u);
+    $row = mysqli_fetch_array($query,MYSQLI_ASSOC);
+    
+    if(($update_msg === $row['msg_msg'])){
+        $error = "Nothing changes";
+    } else {
+        // Thực hiện câu truy vấn
+        $query = mysqli_query($conn, $sql); 
+        $error = "Edit OK";   
+    }
+    Alert($error);
+}
 ?>

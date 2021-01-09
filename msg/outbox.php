@@ -40,6 +40,12 @@
             $delete_id = filter_input(INPUT_POST, 'deleteItem');
             delete_msg($delete_id);       
         }
+        if(isset($_POST['updateItem']) AND is_numeric($_POST['updateItem'])){
+            $update_msgid = filter_input(INPUT_POST, 'updateItem');
+            $update_msg = filter_input(INPUT_POST, 'edit_msg');
+            update_msg($update_msgid, $update_msg);
+        }
+        
         echo "<meta http-equiv='refresh' content='0'>";
     }
 
@@ -120,10 +126,11 @@
                         <form action="outbox.php" method ="post">
                         <tr style="overflow: scroll;">
                             <td><?php echo $i; ?></td>
-                            <td><input disabled style="width: 90%;" type="text" id="username" name="username" value="<?php echo $recver;?>" ></td>
-                            <td><input disabled style="width: 90%;" type="text" id="password" name="password" value="<?php echo $item['msg_msg'];?>"></td>
-                            <td><input disabled style="width: 90%;" type="text" id="fullname" name="fullname" value="<?php echo $item['msg_time'];?>"></td>
+                            <td><input disabled style="width: 90%;" type="text" id="recver" name="recver" value="<?php echo $recver;?>" ></td>
+                            <td><input style="width: 90%;" type="text" id="edit_msg" name="edit_msg" value="<?php echo $item['msg_msg'];?>"></td>
+                            <td><input disabled style="width: 90%;" type="text" id="time" name="time" value="<?php echo $item['msg_time'];?>"></td>
                             <td>
+                                <button type="submit" name="updateItem" value="<?php echo $item['msg_id'];?>">Edit</button>
                                 <button type="submit" name="deleteItem" value="<?php echo $item['msg_id'];?>">Delete</button>
                             </td>
                         </tr>   
