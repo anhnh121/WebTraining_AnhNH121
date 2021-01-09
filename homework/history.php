@@ -32,7 +32,13 @@
        die();
     }
     
-    $homeworks = get_all_homeworks();
+    $result = get_result($login_id);
+    
+    if(filter_input(INPUT_SERVER,'REQUEST_METHOD') === "POST") {
+        $result_id = filter_input(INPUT_POST, 'del_result');
+        delete_result($result_id);
+        echo "<meta http-equiv='refresh' content='0'>";
+    }
     
 ?>
 <html>
@@ -88,39 +94,33 @@
             </div>
         </div>
         <div class="tab">
-            <a class="active" href="../homework/homework.php">Danh sách bài tập</a>
-            <a href="../homework/history.php">Lịch sử nộp bài</a>
+            <a href="../homework/homework.php">Danh sách bài tập</a>
+            <a class="active" href="../homework/history.php">Lịch sử nộp bài</a>
         </div>
-        <div><a style="color:#45a049;font-size: 50px;">Danh sách bài tập</a></div>
+        <div><a style="color:#45a049;font-size: 50px;">Lịch sử nộp bài</a></div>
         <div class="info" style="overflow-x:auto; overflow-y: auto; padding-left: 150px;">
             <table>
                 <tr style="background-color: #006600; color: pink;">
                   <th>STT</th>
                   <th>Title</th>
-                  <th>Teacher</th>
                   <th>TimeUpload</th>
-                  <th>File BT</th>
-                  <th>Bài làm</th>
                   <th>Actions</th>
                 </tr>
                 <?php
                     $i=0;
-                    foreach ($homeworks as $item){
+                    foreach ($result as $item){
                         $i++; 
-                        $idteacher = $item['hw_teacherid'];
-                        $user_upload = get_user($idteacher);
-                        $teacher_name = $user_upload['acc_username'];
-                        $onlyname = basename($item['hw_path']);
+                        $idhw = $item['kq_homeworkid'];
+                        $hw_rows = get_homeworks($idhw);
+                        $title = $hw_rows['hw_title'];
+                        $time = $item['kq_uptime'];;
                 ?>
-                        <form method="POST" enctype="multipart/form-data" action="../homework/upload.php">
+                <form method="POST" action="history.php">
                         <tr>
                             <td><?php echo $i; ?></td>
-                            <td><?php echo $item['hw_title'];?></td>
-                            <td><?php echo $teacher_name;?></td>
-                            <td><?php echo $item['hw_uptime'];?></td>
-                            <td><a download="<?php echo $onlyname ?>" href="../uploads/homework/<?php echo $onlyname ?>"><?php echo $onlyname ?></a></td>
-                            <td><input type="file" name="file_result"></td>
-                            <td><button type="submit" name="up_result" value="<?php echo $item['hw_id'];?>">Nộp bài</button></td>
+                            <td><?php echo $title;?></td>
+                            <td><?php echo $time;?></td>
+                            <td><button type="submit" name="del_result" value="<?php echo $item['kq_id'];?>">Delete</button></td>
                         </tr>   
                         </form>
                   <?php } ?> 

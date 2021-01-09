@@ -509,4 +509,87 @@ function get_all_homeworks(){
     // Trả kết quả về
     return $result;
 }
+
+function get_homeworks($homework_id){
+        // Gọi tới biến toàn cục $conn
+    global $conn;
+    
+    // Hàm kết nối
+    connect_db();
+    
+    $sql = "select * from HOMEWORKS where hw_id=$homework_id";
+    // Thực hiện câu truy vấn
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_array($query,MYSQLI_ASSOC);
+
+    return $row;
+}
+
+function get_all_result(){
+    // Gọi tới biến toàn cục $conn
+    global $conn;
+    
+    // Hàm kết nối
+    connect_db();
+    
+    $sql = "select * from RESULTS";
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $sql);
+    
+    // Mảng chứa kết quả
+    $result = array();
+    
+    // Lặp qua từng record và đưa vào biến kết quả
+    if ($query){
+        while ($row = mysqli_fetch_assoc($query)){
+            $result[] = $row;
+        }
+    }
+    // Trả kết quả về
+    return $result;
+}
+
+function get_result($student_id){
+    // Gọi tới biến toàn cục $conn
+    global $conn;
+    
+    // Hàm kết nối
+    connect_db();
+    
+    $sql = "select * from RESULTS where kq_studentid=$student_id";
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $sql);
+    
+    // Mảng chứa kết quả
+    $result = array();
+    
+    // Lặp qua từng record và đưa vào biến kết quả
+    if ($query){
+        while ($row = mysqli_fetch_assoc($query)){
+            $result[] = $row;
+        }
+    }
+    // Trả kết quả về
+    return $result;
+}
+
+function delete_result($result_id){
+        // Gọi tới biến toàn cục $conn
+    global $conn;
+    
+    // Hàm kết nối
+    connect_db();
+    
+    $sql = "
+    DELETE FROM RESULTS
+    WHERE kq_id = $result_id
+    ";
+   
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $sql);
+    
+    return $query;
+}
+
 ?>

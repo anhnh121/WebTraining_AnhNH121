@@ -85,7 +85,7 @@
             <a href="../user_info/userlist.php">Danh sách người dùng</a>
             <?php 
                 if($login_role == 0){
-                    echo "<a href='../user_info/qlsv.php'>Quản lý Sinh viên</a>";
+                    echo "<a class='active' href='../user_info/qlsv.php'>Quản lý Sinh viên</a>";
                     echo "<a href='../homework/up_homework.php'>Giao bài tập</a>";            
                 }else{
                     echo "<a href='../homework/homework.php'>Bài tập</a>";
