@@ -17,4 +17,10 @@ function phpAlert2($msg, $location) {
 function scriptLocation($location){
     echo '<script type="text/javascript">location = "' . $location . '";</script>';
 }
+
+function replace_extension($filename, $new_extension) {
+    $info = pathinfo($filename);
+    return $info['filename'] . '.' . $new_extension;
+}
+
 ?>

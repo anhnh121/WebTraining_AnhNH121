@@ -85,6 +85,11 @@ function init_db()
         FOREIGN KEY (kq_homeworkid) REFERENCES HOMEWORKS(hw_id)
         )";
     
+    $sql_create5 = "CREATE TABLE IF NOT EXISTS GAME(
+	game_id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        game_hint varchar(255) COLLATE utf8_unicode_ci NOT NULL
+        )";
+    
     $sql_insert = "INSERT INTO ACCOUNTS (acc_id, acc_username, acc_password, acc_fullname, acc_email, acc_phone, acc_role) VALUES
                                         (1, 'teacher1', '123456a@A', 'Nguyen Van A', 'uchiha1610@gmail.com', '0123456789', 0),
                                         (2, 'teacher2', '123456a@A', 'Nguyen Thi B', 'sharingan121@gmail.com', '0123456789', 0),
@@ -96,6 +101,7 @@ function init_db()
     $query2 = mysqli_query($conn, $sql_create2);
     $query3 = mysqli_query($conn, $sql_create3);
     $query4 = mysqli_query($conn, $sql_create4);
+    $query5 = mysqli_query($conn, $sql_create5);
     
     $query = mysqli_query($conn, $sql_insert);
 ////    // Câu truy vấn kiểm tra bảng có tồn tại không
@@ -590,6 +596,43 @@ function delete_result($result_id){
     $query = mysqli_query($conn, $sql);
     
     return $query;
+}
+
+function add_challenge($hint){
+    global $conn;
+    
+    connect_db();
+    // Chống SQL Injection
+    $add_hint = addslashes($hint);
+
+    $sql = "INSERT INTO GAME(game_hint) VALUES ('$add_hint')";
+        $query = mysqli_query($conn, $sql);
+        $id = mysqli_insert_id($conn);
+    return ($id);
+}
+
+function get_all_challenge(){
+    // Gọi tới biến toàn cục $conn
+    global $conn;
+    
+    // Hàm kết nối
+    connect_db();
+    
+    $sql = "select * from GAME";
+    // Thực hiện câu truy vấn
+    $query = mysqli_query($conn, $sql);
+    
+    // Mảng chứa kết quả
+    $result = array();
+    
+    // Lặp qua từng record và đưa vào biến kết quả
+    if ($query){
+        while ($row = mysqli_fetch_assoc($query)){
+            $result[] = $row;
+        }
+    }
+    // Trả kết quả về
+    return $result;
 }
 
 ?>

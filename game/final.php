@@ -10,6 +10,7 @@
     require '../Util.php';
     require '../homework/download.php';
     require '../game/checker.php';
+    
     session_start(); 
     
     $db = connect_db();
@@ -33,25 +34,12 @@
        header("location:login.php");
        die();
     }
-    
-    $chall = get_all_challenge();
-
-    if(filter_input(INPUT_SERVER,'REQUEST_METHOD') === "POST") {     
-        if(isset($_POST['clg_submit']) AND is_numeric($_POST['clg_submit'])){
-            $clg_id = filter_input(INPUT_POST, 'clg_submit');
-            $clg_result = filter_input(INPUT_POST, 'clg_result');
-            $isTrue = check_result_challenge($clg_id, $clg_result);
-            if($isTrue === TRUE){
-                $msg = "Congratulation !!!";
-                $challenge_result = strtolower($clg_result);
-                $final_location = "final.php?id=" . $clg_id . "&" . "clg=" . $challenge_result;
-                phpAlert2($msg, $final_location);
-            }else{
-                $msg = "Failed !!!";
-                phpAlert($msg);
-            }
-        }
+    $data = "Nothing";
+    if((filter_input(INPUT_SERVER,'REQUEST_METHOD') === "GET") AND filter_input(INPUT_GET, 'id') != null AND filter_input(INPUT_GET, 'clg') != null) {
+        $filename_final = filter_input(INPUT_GET, 'clg') . ".id" . filter_input(INPUT_GET, 'id');
+        $data = get_data_file("../game/save/" . $filename_final);
     }
+    
 //    echo "<meta http-equiv='refresh' content='0'>";
 ?>
 <html>
@@ -107,39 +95,12 @@
             </div>
         </div>
         <div class="tab">
-            <a class="active" href="../game/game.php">Challenge</a>
-            <?php 
-                if($login_role == 0){
-                    echo "<a href='../game/upchall.php'>Upload Challenge</a>";            
-                }
-            ?>            
         </div>
-        <div><a style="color:#45a049;font-size: 50px;">Challenge</a></div>
+        <div><a style="color:#45a049;font-size: 50px;">Good Job</a></div>
         <div class="info" style="overflow-x:auto; overflow-y: auto; padding-left: 150px;">
-            <table>
-                <tr style="background-color: #006600; color: pink;">
-                  <th>Challenge</th>
-                  <th>Hint</th>
-                  <th>Result</th>
-                  <th>Submit</th>
-                </tr>
-                <?php
-                    $i=0;
-                    foreach ($chall as $item){
-                        $i++; 
-                        $clg_hint = $item['game_hint'];
-                ?>
-                <form method="POST" action="../game/game.php">
-                        <tr>
-                            <td><?php echo $i; ?></td>
-                            <td><?php echo $clg_hint;?></td>
-                            <td><input style="width: 90%;" type="text" id="clg_result" name="clg_result"></td>
-                            <td><button type="submit" name="clg_submit" value="<?php echo $item['game_id'];?>">Submit</button></td>
-                        </tr>   
-                </form>
-                  <?php } ?> 
-            </table>
+            <p><?php echo nl2br($data) ?></p>
         </div>
+       
    </body>
    
 </html>
