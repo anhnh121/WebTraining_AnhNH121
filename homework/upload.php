@@ -21,22 +21,27 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD') === "POST") {
     $uploader_id = filter_input(INPUT_POST, 'uploadhw');
     // Saving file in uploads folder
     $filename = filter_input(INPUT_POST, 'homework');
-    $size = $file["size"];
-    $ext = pathinfo($file["name"], PATHINFO_EXTENSION);
-    if(!in_array($ext, ['zip', 'pdf', 'doc', 'docx', 'txt'])){
-        $msg = "Your file extension must be .zip, .pdf, .doc, .docx, .txt";
-    }elseif ($size > 1000000) { // file shouldn't be large than 1 MB
-        $msg = "File too large !!!";
+    if($filename == null){
+       $msg = "Press Title !!!"; 
     }else{
+        $size = $file["size"];
+        $ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+        if(!in_array($ext, ['zip', 'pdf', 'doc', 'docx', 'txt'])){
+            $msg = "Your file extension must be .zip, .pdf, .doc, .docx, .txt";
+        }elseif ($size > 1000000) { // file shouldn't be large than 1 MB
+            $msg = "File too large !!!";
+        }else{
 
-        $dest_homework = "../uploads/homework/".$filename.".".$ext;
-        if(move_uploaded_file($file["tmp_name"], $dest_homework)){
-            $msg = add_homework($filename, $dest_homework, $uploader_id); 
-        }
-        else{
-            $msg = "Upload Failed !!!";
+            $dest_homework = "../uploads/homework/".$filename.".".$ext;
+            if(move_uploaded_file($file["tmp_name"], $dest_homework)){
+                $msg = add_homework($filename, $dest_homework, $uploader_id); 
+            }
+            else{
+                $msg = "Upload Failed !!!";
+            }
         }
     }
+
         //Redirecting back to home 
         phpAlert2($msg, "up_homework.php");
     }elseif (isset($_FILES["file_result"]) AND !empty($_POST["up_result"])) {

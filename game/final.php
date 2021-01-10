@@ -97,7 +97,7 @@
         <div class="tab">
         </div>
         <div><a style="color:#45a049;font-size: 50px;">Good Job</a></div>
-        <div class="info" style="overflow-x:auto; overflow-y: auto; padding-left: 150px;">
+        <div style="padding-top: 50px; padding-right: 30px; padding-bottom: 50px; padding-left: 80px;" class="info" style="overflow-x:auto; overflow-y: auto; padding-left: 150px;">
             <p><?php echo nl2br($data) ?></p>
         </div>
        

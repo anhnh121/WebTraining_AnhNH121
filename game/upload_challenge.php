@@ -15,27 +15,32 @@ if(filter_input(INPUT_SERVER,'REQUEST_METHOD') === "POST") {
     $file = $_FILES["challenge"];
 
     $hint = filter_input(INPUT_POST, 'hint');
-    // Saving file in uploads folder
-    $filename = $file["name"];
-    $size = $file["size"];
-    $ext = pathinfo($file["name"], PATHINFO_EXTENSION);
-    if($ext !== "txt"){
-        $msg = "Your file extension must be .txt";
-    }elseif ($size > 1000000) { // file shouldn't be large than 1 MB
-        $msg = "File too large !!!";
+    if($hint == null){
+        $msg = "Press Hint !!!";
     }else{
-        $filename = strtolower($filename);
-        $nowid = add_challenge($hint);
-        $new_ext="id".$nowid;
-        $new_name = replace_extension($filename, $new_ext);
-        $dest_homework = "../game/save/".$new_name;
-        if(move_uploaded_file($file["tmp_name"], $dest_homework)){
-            $msg = "Upload_OK"; 
-        }
-        else{
-            $msg = "Upload Failed !!!";
+            // Saving file in uploads folder
+        $filename = $file["name"];
+        $size = $file["size"];
+        $ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+        if($ext !== "txt"){
+            $msg = "Your file extension must be .txt";
+        }elseif ($size > 1000000) { // file shouldn't be large than 1 MB
+            $msg = "File too large !!!";
+        }else{
+            $filename = strtolower($filename);
+            $nowid = add_challenge($hint);
+            $new_ext="id".$nowid;
+            $new_name = replace_extension($filename, $new_ext);
+            $dest_homework = "../game/save/".$new_name;
+            if(move_uploaded_file($file["tmp_name"], $dest_homework)){
+                $msg = "Upload_OK"; 
+            }
+            else{
+                $msg = "Upload Failed !!!";
+            }
         }
     }
+
         //Redirecting back to home 
         phpAlert2($msg, "upchall.php");
     
