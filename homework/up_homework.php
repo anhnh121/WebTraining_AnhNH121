@@ -64,8 +64,8 @@
             </div>
         </div>
         <div class="tab">
-            <a class="active" href='../homework/homework.php'>Upload Homework</a>
-            <a href="#KQ">Danh sách bài làm</a>
+            <a class="active" href='../homework/up_homework.php'>Upload Homework</a>
+            <a href="../homework/list_result.php">Danh sách bài làm</a>
         </div>
         <div><a style="color:#45a049;font-size: 50px;">Upload Homework</a></div>
         <div class="info" style="overflow-x:auto; overflow-y: auto; padding-left: 150px;">
