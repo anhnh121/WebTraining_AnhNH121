@@ -79,6 +79,44 @@ use App\Http\Controllers\AnhNHController;
   Route::get('callcontroller', [AnhNHController::class, 'Hi']);
   Route::get('rr', [AnhNHController::class, 'redirectRouter']);
 
+  //URL
+  Route::get('MyRequest', [AnhNHController::class, 'TestRequest']);
+
+  //Request gui nhan du lieu POST anhnhForm
+  // Hien thi View
+  Route::get('getForm', function(){
+    return view('anhnhForm');
+  });
+  // Nhan du lieu va goi Controller
+  Route::post('postForm', [AnhNHController::class, 'postRequest'])->name('postForm');
+  
+  // Cookie
+  Route::get('setCookie', [AnhNHController::class, 'setCookie']);
+  Route::get('getCookie', [AnhNHController::class, 'getCookie']);
+  
+  //File
+  Route::get('uploadFile', function(){
+      return view('anhnhFile');
+  });
+  
+  Route::post('postFile', [AnhNHController::class, 'postFileRequest'])->name('postFile');
+  
+  // JSON
+  Route::get('getJSON', [AnhNHController::class, 'setJSON']);
+  
+  // Truyen tham so tren view
+  Route::get('Time/{t}', [AnhNHController::class, 'Time']);
+  
+  // Share Data
+  View::share('share_name', 'Vergil');
+  Route::get('ShareView', [AnhNHController::class, 'ShareView']);
+  
+  // Blade
+  Route::get('blade', function(){
+      return view('anhnhView.sub.sub1');
+  });
+  
+  Route::get('BladeTemp/{str}', [AnhNHController::class, 'BladeTemp']);
 // |--------------------------------------------------------------------------
 // | AnhNH Template
 // |--------------------------------------------------------------------------
