@@ -1,1 +1,0 @@
-<h1>This is <?php echo $share_name; ?></h1>
