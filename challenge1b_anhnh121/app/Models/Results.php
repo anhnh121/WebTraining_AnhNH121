@@ -12,7 +12,7 @@ class Results extends Model
     protected $primaryKey = 'kq_id';
     
     public function kq_hw() {
-        return $this->belongsTo(Results::class, 'kq_homeworkid', 'hw_id');
+        return $this->belongsTo(Homework::class, 'kq_homeworkid', 'hw_id');
     }
     
     public function kq_acc() {
