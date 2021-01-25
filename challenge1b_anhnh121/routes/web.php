@@ -60,9 +60,46 @@ Route::get('testmodel', function () {
     
 });
 
-Route::get('anhnh', function () {
-    return view('loginForm');
+Route::get('login', function () {
+    return view('accounts.view_Login');
+});
+Route::get('listuser', function () {
+    return view('accounts.view_ListUser');
+});
+Route::get('updateuser', function () {
+    return view('accounts.view_UpdateUser');
 });
 
- Route::get('login', [MyController::class, 'getLogin']);
+ Route::get('login', [MyController::class, 'getLogin'])->middleware('anhnh_middleware');
  Route::post('postLogin', [MyController::class, 'postLogin'])->name('loginRoute');
+ 
+ //Group prefix, middleware
+Route::group(['prefix'=> 'Teacher'], function(){
+  //domain/Teacher/member1
+  Route::get('member1', function(){
+    echo "Member1";
+  });
+  //domain/Teacher/member2
+  Route::get('member2', function(){
+    echo "Member2";
+  });
+  //domain/Teacher/member3
+  Route::get('member3', function(){
+    echo "Member3";
+  });
+});
+
+Route::group(['prefix'=> 'Student', 'middleware'=>'anhnh_middleware'], function(){
+  //domain/Student/member1
+  Route::get('member1', function(){
+    echo "Member1";
+  });
+  //domain/Student/member2
+  Route::get('member2', function(){
+    echo "Member2";
+  });
+  //domain/Student/member3
+  Route::get('member3', function(){
+    echo "Member3";
+  });
+});

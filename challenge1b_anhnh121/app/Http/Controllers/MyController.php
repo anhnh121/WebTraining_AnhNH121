@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class MyController extends Controller
 {
     public function getLogin(){
-        return view('loginForm');
+        return view('view_Login');
     }
     
     public function postLogin(Request $request){
@@ -22,10 +22,10 @@ class MyController extends Controller
 //            'username.required'=> 'Press Username',
 //            'password.required'=> 'Press Password',
 //        ]);
-        if(Auth::attempt(['acc_username'=>$logon_username, 'acc_password'=>$logon_password])){
-            echo 'OK';
-        }else{
-            return redirect('loginForm')->with('Warning!!!', 'Wrong User or Password');
-        }
+//        if(Auth::attempt(['acc_username'=>$logon_username, 'acc_password'=>$logon_password])){
+//            echo 'OK';
+//        }else{
+//            return redirect('loginForm')->with('Warning!!!', 'Wrong User or Password');
+//        }
     }
 }
