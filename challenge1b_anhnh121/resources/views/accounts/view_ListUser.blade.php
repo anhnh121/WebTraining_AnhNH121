@@ -1,6 +1,6 @@
 @extends('view_Master')
 @section('title')
-  <title>Danh sách người dùng</title>
+  <title>User List</title>
 @endsection
 
 @section('newcss')
@@ -40,6 +40,7 @@
 
 @section('navbar')
     <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="#" style="color:#ff6666"><b>Profile</b></a></li>
         <li class="nav-item active"><a class="nav-link" href="#" style="color:#ff6666"><b>User List</b></a></li>
         <li class="nav-item"><a class="nav-link" href="#" style="color:#ff6666"><b>Student Management</b></a></li>
         <li class="nav-item"><a class="nav-link" href="#" style="color:#ff6666"><b>Homework</b></a></li>
@@ -53,14 +54,14 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
-              <div class="card card-plain">
+              <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title mt-0">User List</h4>
 <!--                  <p class="card-category">Danh sách người dùng</p>-->
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table">
                       <tr class="">
                         <th style="color: #ffff66;">STT</th>
                         <th style="color: #ffff66;">User Name</th>
@@ -74,14 +75,14 @@
                             <td>teacher2</td>
                             <td>Nguyen Thi B</td>
                             <td>Teacher</td>
-                            <td>Details</td>
+                            <td><a href="#">Details</a></td>
                         </tr>
                         <tr>
                             <td>2</td>
                             <td>student1</td>
                             <td>Nguyen Van C</td>
                             <td>Student</td>
-                            <td>Details</td>
+                            <td><a href="#">Details</a></td>
                         </tr>
                       </tbody>
                     </table>

@@ -60,14 +60,65 @@ Route::get('testmodel', function () {
     
 });
 
+// Blade
+// Login
 Route::get('login', function () {
     return view('accounts.view_Login');
 });
+// Profile
+Route::get('updateprofile', function () {
+    return view('accounts.view_Profile');
+});
+Route::get('changepass', function () {
+    return view('accounts.view_ChangePass');
+});
+// List User
 Route::get('listuser', function () {
     return view('accounts.view_ListUser');
 });
+// Student Management
 Route::get('updateuser', function () {
     return view('accounts.view_UpdateUser');
+});
+Route::get('adduser', function () {
+    return view('accounts.view_AddUser');
+});
+
+// Teacher Homework
+Route::get('listresult', function () {
+    return view('homework.view_ListResult');
+});
+Route::get('uploadhw', function () {
+    return view('homework.view_UploadHomework');
+});
+
+//Student Homework
+Route::get('submithistory', function () {
+    return view('homework.view_SubmitHistory');
+});
+Route::get('homework', function () {
+    return view('homework.view_AvailableHomework');
+});
+
+
+// Mail Box
+Route::get('inbox', function () {
+    return view('msg.view_Inbox');
+});
+
+Route::get('sent', function () {
+    return view('msg.view_Sent');
+});
+
+Route::get('sendmsg', function () {
+    return view('msg.view_SendMsg');
+});
+// Challenge
+Route::get('uploadgame', function () {
+    return view('game.view_UploadGame');
+});
+Route::get('game', function () {
+    return view('game.view_Challenge');
 });
 
  Route::get('login', [MyController::class, 'getLogin'])->middleware('anhnh_middleware');
