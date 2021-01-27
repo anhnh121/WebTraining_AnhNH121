@@ -77,6 +77,7 @@ Route::get('testmodel', function () {
 //route::post('/', [controller_Account::class, 'postLogin']);
 Route::get('getLogin', [controller_Account::class, 'getLogin'])->middleware('anhnh_middleware');
 Route::post('postLogin', [controller_Account::class, 'postLogin'])->name('loginRoute');
+Route::get('logout', [controller_Account::class, 'logout'])->name('logout');
 //////////////////////////////// Profile //////////////////////////////////
 
 Route::get('updateprofile', [controller_Account::class, 'updateProfile'])->name('route_UpdateProfile');

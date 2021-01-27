@@ -49,11 +49,21 @@
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" style="color:#ff6666">
-                  <i class="material-icons">person</i><b>Teacher: 1</b>
+                    <?php 
+                        $role = "";
+                        $name = Auth::guard('account')->user()->username;
+                        if ((Auth::guard('account')->user()->acc_role) === 0){
+                            $role = "Teacher";
+                        }elseif ((Auth::guard('account')->user()->acc_role) === 1) {
+                            $role = "Student";   
+                        }
+                        $logon_name = $role.": ".$name;
+                    ?>
+                  <i class="material-icons">person</i><b>{!!$logon_name!!}</b>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" style="color:#ff6666">
+                <a class="nav-link" href="{{route('logout')}}" style="color:#ff6666">
                   <i class="material-icons">exit_to_app</i><b>Log out</b>
                 </a>
               </li>
