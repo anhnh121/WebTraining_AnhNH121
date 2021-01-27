@@ -4,14 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-//use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Account extends Model
+class Account extends Authenticatable
 {
+    use Notifiable;
     use HasFactory;
     protected $table = 'ACCOUNTS';
     protected $primaryKey = 'acc_id';
     
+    protected $fillable = [
+        'username', 'password',
+    ];
+    
+    protected $hidden = [
+        'password',
+    ];
+
     public function acc_msg_sender() {
         return $this->hasMany(Msg::class, 'msg_idsender', 'acc_id'); 
     }

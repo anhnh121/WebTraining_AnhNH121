@@ -47,10 +47,17 @@ return [
             'hash' => false,
         ],
         
-//        'account' => [
-//            'driver' => 'session',
-//            'provider' => 'accounts',
-//        ],
+        'account' => [
+            'driver' => 'session',
+            'provider' => 'accounts',
+        ],
+        
+        'account-api' => [
+            'driver' => 'token',
+            'provider' => 'accounts',
+            'hash' => false,
+        ],
+        
     ],
 
     /*
@@ -80,10 +87,10 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
-//        'accounts' => [
-//            'driver' => 'eloquent',
-//            'model' => App\Models\Account::class,
-//        ],
+        'accounts' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Account::class,
+        ],
     ],
 
     /*
@@ -108,6 +115,15 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+        
+        'accounts' => [
+            'provider' => 'accounts',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        
+        
     ],
 
     /*

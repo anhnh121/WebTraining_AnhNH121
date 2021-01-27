@@ -15,8 +15,8 @@ class Initdb extends Migration
     {
         Schema::create('ACCOUNTS', function (Blueprint $table) {
             $table->increments('acc_id');   //"UNSIGNED INTEGER"
-            $table->string('acc_username',250)->unique();
-            $table->string('acc_password',250);
+            $table->string('username',250)->unique();
+            $table->string('password',250);
             $table->string('acc_fullname',250);
             $table->string('acc_email',250)->nullable();
             $table->string('acc_phone',250)->nullable();
