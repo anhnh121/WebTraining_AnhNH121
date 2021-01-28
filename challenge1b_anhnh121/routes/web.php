@@ -69,90 +69,84 @@ Route::get('testmodel', function () {
 
 // Blade
 //////////////////////////////// Login ////////////////////////////////
-//Route::get('myLogin', function () {
-//    return view('view_Login');
-//});
 
-//route::get('/', [controller_Account::class, 'getLogin']);
-//route::post('/', [controller_Account::class, 'postLogin']);
-Route::get('getLogin', [controller_Account::class, 'getLogin'])->middleware('anhnh_middleware');
+Route::get('getLogin', [controller_Account::class, 'getLogin']);
 Route::post('postLogin', [controller_Account::class, 'postLogin'])->name('loginRoute');
 Route::get('logout', [controller_Account::class, 'logout'])->name('logout');
-//////////////////////////////// Profile //////////////////////////////////
 
-Route::get('updateprofile', [controller_Account::class, 'updateProfile'])->name('route_UpdateProfile');
+Route::group(['prefix'=> 'User', 'middleware'=>'user'], function(){
+    Route::get('updateprofile', [controller_Account::class, 'updateProfile'])->name('route_UpdateProfile');
+    Route::get('changepass', [controller_Account::class, 'changePassword'])->name('route_ChangePassword');
 
-Route::get('changepass', [controller_Account::class, 'changePassword'])->name('route_ChangePassword');
+    Route::get('listuser', [controller_Account::class, 'listUser'])->name('route_ListUser');
+    
+    Route::get('inbox', [controller_Msg::class, 'getInbox'])->name('route_GetInbox');
+    Route::get('sent', [controller_Msg::class, 'getOutbox'])->name('route_GetOutbox');
+    Route::get('sendmsg', [controller_Msg::class, 'sendMsg'])->name('route_SendMsg');
+    
+    Route::get('game', [controller_Game::class, 'getChallenge'])->name('route_Challenge');
+});
 
-//////////////////////////////// List User ////////////////////////////////
+Route::group(['prefix'=> 'Student', 'middleware'=>['user', 'student']], function(){
+    Route::get('submithistory', [controller_Homework::class, 'submitHistory'])->name('route_SubmitHistory');
+    Route::get('homework', [controller_Homework::class, 'getHomework'])->name('route_GetHomework');
+    
+});
 
-Route::get('listuser', [controller_Account::class, 'listUser'])->name('route_ListUser');
-
-//////////////////////////////// Student Management ///////////////////////
-
-Route::get('updateuser', [controller_Account::class, 'updateUser'])->name('route_UpdateUser');
-
-Route::get('adduser', [controller_Account::class, 'addUser'])->name('route_AddUser');
-
-//////////////////////////////// Teacher Homework /////////////////////////
-
-Route::get('listresult', [controller_Homework::class, 'listResult'])->name('route_ListResult');
-
-Route::get('uploadhw', [controller_Homework::class, 'uploadHomework'])->name('route_UploadHomework');
-
-//////////////////////////////// Student Homework /////////////////////////
-
-Route::get('submithistory', [controller_Homework::class, 'submitHistory'])->name('route_SubmitHistory');
-
-Route::get('homework', [controller_Homework::class, 'getHomework'])->name('route_GetHomework');
-
-//////////////////////////////// Mail Box /////////////////////////////////
-
-Route::get('inbox', [controller_Msg::class, 'getInbox'])->name('route_GetInbox');
-
-Route::get('sent', [controller_Msg::class, 'getOutbox'])->name('route_GetOutbox');
-
-Route::get('sendmsg', [controller_Msg::class, 'sendMsg'])->name('route_SendMsg');
-
-//////////////////////////////// Challenge ////////////////////////////////
-
-Route::get('uploadgame', [controller_Game::class, 'uploadGame'])->name('route_UploadGame');
-
-Route::get('game', [controller_Game::class, 'getChallenge'])->name('route_Challenge');
+Route::group(['prefix'=> 'Teacher', 'middleware'=>['user', 'teacher']], function(){
+  //domain/Student/member1
+    Route::get('updateuser', [controller_Account::class, 'updateUser'])->name('route_UpdateUser');
+    Route::get('adduser', [controller_Account::class, 'addUser'])->name('route_AddUser');
+    
+    Route::get('listresult', [controller_Homework::class, 'listResult'])->name('route_ListResult');
+    Route::get('uploadhw', [controller_Homework::class, 'uploadHomework'])->name('route_UploadHomework');
+    
+    Route::get('uploadgame', [controller_Game::class, 'uploadGame'])->name('route_UploadGame');
+});
+////////////////////////////////// Profile //////////////////////////////////
+//
+//Route::get('updateprofile', [controller_Account::class, 'updateProfile'])->name('route_UpdateProfile');
+//Route::get('changepass', [controller_Account::class, 'changePassword'])->name('route_ChangePassword');
+//
+////////////////////////////////// List User ////////////////////////////////
+//
+//Route::get('listuser', [controller_Account::class, 'listUser'])->name('route_ListUser');
+//
+////////////////////////////////// Student Management ///////////////////////
+//
+//Route::get('updateuser', [controller_Account::class, 'updateUser'])->name('route_UpdateUser');
+//
+//Route::get('adduser', [controller_Account::class, 'addUser'])->name('route_AddUser');
+//
+////////////////////////////////// Teacher Homework /////////////////////////
+//
+//Route::get('listresult', [controller_Homework::class, 'listResult'])->name('route_ListResult');
+//
+//Route::get('uploadhw', [controller_Homework::class, 'uploadHomework'])->name('route_UploadHomework');
+//
+////////////////////////////////// Student Homework /////////////////////////
+//
+//Route::get('submithistory', [controller_Homework::class, 'submitHistory'])->name('route_SubmitHistory');
+//
+//Route::get('homework', [controller_Homework::class, 'getHomework'])->name('route_GetHomework');
+//
+////////////////////////////////// Mail Box /////////////////////////////////
+//
+//Route::get('inbox', [controller_Msg::class, 'getInbox'])->name('route_GetInbox');
+//
+//Route::get('sent', [controller_Msg::class, 'getOutbox'])->name('route_GetOutbox');
+//
+//Route::get('sendmsg', [controller_Msg::class, 'sendMsg'])->name('route_SendMsg');
+//
+////////////////////////////////// Challenge ////////////////////////////////
+//
+//Route::get('uploadgame', [controller_Game::class, 'uploadGame'])->name('route_UploadGame');
+//
+//Route::get('game', [controller_Game::class, 'getChallenge'])->name('route_Challenge');
 
 ///////////////////////////////////////////////////////////////////////////
 
- //Group prefix, middleware
-Route::group(['prefix'=> 'Teacher'], function(){
-  //domain/Teacher/member1
-  Route::get('member1', function(){
-    echo "Member1";
-  });
-  //domain/Teacher/member2
-  Route::get('member2', function(){
-    echo "Member2";
-  });
-  //domain/Teacher/member3
-  Route::get('member3', function(){
-    echo "Member3";
-  });
-});
-
-Route::group(['prefix'=> 'Student', 'middleware'=>'anhnh_middleware'], function(){
-  //domain/Student/member1
-  Route::get('member1', function(){
-    echo "Member1";
-  });
-  //domain/Student/member2
-  Route::get('member2', function(){
-    echo "Member2";
-  });
-  //domain/Student/member3
-  Route::get('member3', function(){
-    echo "Member3";
-  });
-});
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

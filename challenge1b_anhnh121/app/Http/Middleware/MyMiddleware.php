@@ -4,7 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-
+use Auth;
+use App\Util\Util;
 class MyMiddleware
 {
     /**
@@ -16,7 +17,14 @@ class MyMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        if(Auth::guard('account')->check()){
+            return $next($request);
+        }else{
+            $msg = 'Login Failed';
+            $util = new Util();
+            $util->phpAlert($msg);
+            return redirect('getLogin');     
+        }
         
-        return $next($request);
     }
 }
