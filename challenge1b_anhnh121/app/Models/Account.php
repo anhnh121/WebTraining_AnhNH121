@@ -14,6 +14,7 @@ class Account extends Authenticatable
     use HasFactory;
     protected $table = 'ACCOUNTS';
     protected $primaryKey = 'acc_id';
+    public $timestamps = false;
     
     protected $fillable = [
         'username', 'password',

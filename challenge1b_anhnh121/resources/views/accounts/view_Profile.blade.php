@@ -31,11 +31,13 @@
         <li class="nav-item"><a class="nav-link" href="{{route('route_ListUser')}}" style="color:#ff6666"><b>User List</b></a></li>
         <?php 
             if ((Auth::guard('account')->user()->acc_role) === 0){
+                $role = "Teacher";
                 $myRoute = "route_UploadHomework";
         ?>
         <li class="nav-item"><a class="nav-link" href="{{route('route_UpdateUser')}}" style="color:#ff6666"><b>Student Management</b></a></li>
         <?php
             }else{
+                $role = "Student";
                 $myRoute = "route_GetHomework";
             }
         ?>
@@ -55,36 +57,43 @@
             </div>
             <div class="card-body">
               <div id="typography">
-                  <form>
+                  <form method="post" action="{{route('UpdateProfile')}}">
+                      {{ csrf_field() }}
+                    <?php 
+                        $username = Auth::guard('account')->user()->username;
+                        $fullname = Auth::guard('account')->user()->acc_fullname;
+                        $email = Auth::guard('account')->user()->acc_email;
+                        $phone = Auth::guard('account')->user()->acc_phone;
+                    ?>
                       <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>User Name</label>
-                              <input type="text" class="form-control" value="username" disabled>
+                              <input type="text" class="form-control" name="username" value=<?php echo $username;?> disabled>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Full Name</label>
-                              <input type="text" class="form-control" value="full name" disabled>
+                              <input type="text" class="form-control" name="fullname" value=<?php echo "'$fullname'";?> disabled>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Email</label>
-                              <input type="text" class="form-control" value="email">
+                              <input type="text" class="form-control" name="email" value=<?php echo $email;?> >
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Phone</label>
-                              <input type="text" class="form-control" value="phone">
+                              <input type="text" class="form-control" name="phone" value=<?php echo $phone;?> >
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Role</label>
-                              <input type="text" class="form-control" value="role" disabled>
+                              <input type="text" class="form-control" name="role" value=<?php echo $role;?> disabled>
                             </div>
                         </div>
                     </div>

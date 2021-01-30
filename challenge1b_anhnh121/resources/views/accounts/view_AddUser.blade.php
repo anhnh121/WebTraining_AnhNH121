@@ -55,36 +55,37 @@
             </div>
             <div class="card-body">
               <div id="typography">
-                  <form>
+                  <form method="post" action="{{route('AddUser')}}">
+                      {{ csrf_field() }}
                       <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>User Name</label>
-                              <input type="text" class="form-control" value="email">
+                              <input type="text" class="form-control" name="username" required>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Password</label>
-                              <input type="text" class="form-control" value="phone">
+                              <input type="password" class="form-control" name="password" required>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Full Name</label>
-                              <input type="text" class="form-control" value="role">
+                              <input type="text" class="form-control" name="fullname" required>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Email</label>
-                              <input type="text" class="form-control" value="role">
+                              <input type="text" class="form-control" name="email">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Phone</label>
-                              <input type="text" class="form-control" value="role">
+                              <input type="text" class="form-control" name="phone">
                             </div>
                         </div>
                     </div>

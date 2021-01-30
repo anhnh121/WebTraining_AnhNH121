@@ -71,18 +71,22 @@
                         <th style="color: #ffff66;">Time</th>
                       </tr>
                       <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>teacher2</td>
-                            <td>Nguyen Thi B</td>
-                            <td>Teacher</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>student1</td>
-                            <td>Nguyen Van C</td>
-                            <td>Student</td>
-                        </tr>
+                        <?php
+                            $i=0;
+                            foreach ($data as $item){
+                                $i++;
+                                $acc_idrow=$item['msg_id']; 
+                        ?>
+                        <form>
+                            {{ csrf_field() }}
+                            <tr>
+                                <td><?php echo $i; ?></td>
+                                <td>{{$item['sender']}}</td>
+                                <td>{{$item['msg_msg']}}</td>
+                                <td>{{$item['msg_time']}}</td>
+                            </tr>   
+                        </form>
+                        <?php }?>
                       </tbody>
                     </table>
                   </div>

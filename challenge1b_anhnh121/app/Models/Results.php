@@ -10,6 +10,7 @@ class Results extends Model
     use HasFactory;
     protected $table = 'RESULTS';
     protected $primaryKey = 'kq_id';
+    public $timestamps = false;
     
     public function kq_hw() {
         return $this->belongsTo(Homework::class, 'kq_homeworkid', 'hw_id');

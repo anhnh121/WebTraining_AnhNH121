@@ -10,4 +10,5 @@ class Game extends Model
     use HasFactory;
     protected $table = 'GAME';
     protected $primaryKey = 'game_id';
+    public $timestamps = false;
 }

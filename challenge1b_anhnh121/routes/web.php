@@ -76,13 +76,20 @@ Route::get('logout', [controller_Account::class, 'logout'])->name('logout');
 
 Route::group(['prefix'=> 'User', 'middleware'=>'user'], function(){
     Route::get('updateprofile', [controller_Account::class, 'updateProfile'])->name('route_UpdateProfile');
+    Route::post('postprofile', [controller_Account::class, 'submitUpdateProfile'])->name('UpdateProfile');
+    
     Route::get('changepass', [controller_Account::class, 'changePassword'])->name('route_ChangePassword');
+    Route::post('postpass', [controller_Account::class, 'submitChangePassword'])->name('ChangePassword');
 
     Route::get('listuser', [controller_Account::class, 'listUser'])->name('route_ListUser');
     
+    Route::get('sendmsg/{id}', [controller_Msg::class, 'sendMsg'])->name('route_SendMsg');
+    Route::post('postmsg', [controller_Msg::class, 'postMsg'])->name('SendMsg');
+    
     Route::get('inbox', [controller_Msg::class, 'getInbox'])->name('route_GetInbox');
+    
     Route::get('sent', [controller_Msg::class, 'getOutbox'])->name('route_GetOutbox');
-    Route::get('sendmsg', [controller_Msg::class, 'sendMsg'])->name('route_SendMsg');
+    Route::post('postsent', [controller_Msg::class, 'submitUpdateMsg'])->name('UpdateMsg');
     
     Route::get('game', [controller_Game::class, 'getChallenge'])->name('route_Challenge');
 });
@@ -96,12 +103,17 @@ Route::group(['prefix'=> 'Student', 'middleware'=>['user', 'student']], function
 Route::group(['prefix'=> 'Teacher', 'middleware'=>['user', 'teacher']], function(){
   //domain/Student/member1
     Route::get('updateuser', [controller_Account::class, 'updateUser'])->name('route_UpdateUser');
+    Route::post('postupdateuser', [controller_Account::class, 'submitUpdateUser'])->name('UpdateUser');
+    
     Route::get('adduser', [controller_Account::class, 'addUser'])->name('route_AddUser');
+    Route::post('postadduser', [controller_Account::class, 'submitAddUser'])->name('AddUser');
     
     Route::get('listresult', [controller_Homework::class, 'listResult'])->name('route_ListResult');
     Route::get('uploadhw', [controller_Homework::class, 'uploadHomework'])->name('route_UploadHomework');
     
     Route::get('uploadgame', [controller_Game::class, 'uploadGame'])->name('route_UploadGame');
+    Route::post('postupgame', [controller_Game::class, 'submitUploadGame'])->name('UploadGame');
+    
 });
 ////////////////////////////////// Profile //////////////////////////////////
 //

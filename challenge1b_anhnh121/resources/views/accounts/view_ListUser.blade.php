@@ -67,24 +67,31 @@
                         <th style="color: #ffff66;">Details</th>
                       </tr>
                       <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>teacher2</td>
-                            <td>Nguyen Thi B</td>
-                            <td>Teacher</td>
-                            <td><a href="{{route('route_SendMsg')}}">
-                                <i class="material-icons">remove_red_eye</i>
-                            </a></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>student1</td>
-                            <td>Nguyen Van C</td>
-                            <td>Student</td>
-                            <td><a href="{{route('route_SendMsg')}}">
-                                <i class="material-icons">remove_red_eye</i>
-                            </a></td>
-                        </tr>
+                        <?php
+                            $i=0;
+                            foreach ($data as $item){
+                                $i++;
+                                if($item['acc_role'] == 0){
+                                    $user_role = "Teacher";
+                                } else{
+                                    $user_role = "Student";
+                                }
+                                $acc_idrow=$item['acc_id'];
+                            
+                        ?>
+                            <form>
+                                {{ csrf_field() }}
+                                <tr>
+                                    <td><?php echo $i; ?></td>
+                                    <td><?php echo $item['username'];?></td>
+                                    <td><?php echo $item['acc_fullname'];?></td>
+                                    <td><?php echo $user_role;?></td>
+                                    <td><a href="sendmsg/{{$acc_idrow}}">
+                                        <i class="material-icons">remove_red_eye</i>
+                                    </a></td>
+                                </tr>   
+                            </form>
+                        <?php } ?>
                       </tbody>
                     </table>
                   </div>

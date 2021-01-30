@@ -78,30 +78,31 @@
                         <th style="color: #ffff66; text-align:center;">Actions</th>
                       </tr>
                       <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><input type="text" class="form-control" value="student1"></td>
-                            <td><input type="text" class="form-control" value="123456aA@"></td>
-                            <td><input type="text" class="form-control" value="Nguyen Thi B"></td>
-                            <td><input type="text" class="form-control" value="songoku1994@gmail.com"></td>
-                            <td><input type="text" class="form-control" value="01234567810"></td>
-                            <td>
-                                <button type="submit" class="btn"><i class="material-icons">mode_edit</i></button>
-                                <button type="submit" class="btn"><i class="material-icons">delete</i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><input type="text" class="form-control" value="student1"></td>
-                            <td><input type="text" class="form-control" value="123456aA@"></td>
-                            <td><input type="text" class="form-control" value="Nguyen Thi B"></td>
-                            <td><input type="text" class="form-control" value="songoku1994@gmail.com"></td>
-                            <td><input type="text" class="form-control" value="01234567810"></td>
-                            <td>
-                                <button type="submit" class="btn"><i class="material-icons">mode_edit</i></button>
-                                <button type="submit" class="btn"><i class="material-icons">delete</i></button>
-                            </td>
-                        </tr>
+                        <?php
+                            $i=0;
+                            foreach ($data as $item){
+                                $i++;
+                                $acc_idrow=$item['acc_id'];
+                            
+                        ?>
+                            <form method="post" action="{{route('UpdateUser')}}">
+                                {{ csrf_field() }}
+                            <tr>
+                                <td>{{$i}}</td>
+                                <td><input type="text" class="form-control" name="username" value={{$item['username']}} ></td>
+                                <td><input type="password" class="form-control" name="password" value={{$item['password']}} ></td>
+                                <td><input type="text" class="form-control" name="fullname" value='{{$item['acc_fullname']}}' ></td>
+                                <td><input type="text" class="form-control" name="email" value={{$item['acc_email']}} ></td>
+                                <td><input type="text" class="form-control" name="phone" value={{$item['acc_phone']}} ></td>
+                                <td>
+                                    <input type="hidden" name="edited_id" value={{$acc_idrow}}>
+                                    <button type="submit" class="btn" name="edit" value="edit"><i class="material-icons">mode_edit</i></button>
+                                    <button type="submit" class="btn" name="delete" value="delete"><i class="material-icons">delete</i></button>
+                                </td>
+                            </tr>   
+                            </form>                               
+                        <?php } ?>
+                        
                       </tbody>
                     </table>
                   </div>

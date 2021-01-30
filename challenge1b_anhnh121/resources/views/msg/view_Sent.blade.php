@@ -72,26 +72,29 @@
                         <th style="color: #ffff66; text-align:center;">Actions</th>
                       </tr>
                       <tbody>
+                        <?php
+                            $i=0;
+                            foreach ($data as $item){
+                                $i++;
+                                $acc_idrow=$item['msg_id'];
+                                $temp_msg = $item['msg_msg'];
+                            
+                        ?>
+                        <form method="post" action="{{route('UpdateMsg')}}">
+                            {{ csrf_field() }}
                         <tr>
-                            <td>1</td>
-                            <td>teacher2</td>
-                            <td>Nguyen Thi B</td>
-                            <td>Teacher</td>
+                            <td>{{$i}}</td>
+                            <td>{{$item['recver']}}</td>
+                            <td><textarea rows="1" class="form-control" name="msg">{{$temp_msg}}</textarea></td>
+                            <td>{{$item['msg_time']}}</td>
                             <td style="text-align:center;">
-                                <button type="submit" class="btn"><i class="material-icons">mode_edit</i></button>
-                                <button type="submit" class="btn"><i class="material-icons">delete</i></button>
+                                <input type="hidden" name="edited_id" value={{$acc_idrow}}>
+                                <button type="submit" class="btn" name="edit" value="edit"><i class="material-icons">mode_edit</i></button>
+                                <button type="submit" class="btn" name="delete" value="delete"><i class="material-icons">delete</i></button>
                             </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>student1</td>
-                            <td>Nguyen Van C</td>
-                            <td>Student</td>
-                            <td style="text-align:center;">
-                                <button type="submit" class="btn"><i class="material-icons">mode_edit</i></button>
-                                <button type="submit" class="btn"><i class="material-icons">delete</i></button>
-                            </td>
-                        </tr>
+                        </tr>    
+                        </form>                                
+                        <?php }?>
                       </tbody>
                     </table>
                   </div>

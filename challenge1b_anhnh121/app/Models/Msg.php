@@ -10,6 +10,7 @@ class Msg extends Model
     use HasFactory;
     protected $table = 'MSG';
     protected $primaryKey = 'msg_id';
+    public $timestamps = false;
     
     public function msg_sender_acc() {
         return $this->belongsTo(Account::class, 'msg_idsender', 'acc_id'); 

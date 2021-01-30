@@ -68,45 +68,47 @@
             </div>
             <div class="card-body">
               <div id="typography">
-                  <form>
+                  <form method="post" action="{{route('SendMsg')}}">
+                      {{ csrf_field() }}
                       <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>User Name</label>
-                              <input type="text" class="form-control" value="email" disabled>
+                              <input type="text" class="form-control" name="username" value={{$user->username}} disabled>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Full Name</label>
-                              <input type="text" class="form-control" value="phone" disabled>
+                              <input type="text" class="form-control" name="fullname" value=<?php echo "'$user->acc_fullname'";?> disabled>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Email</label>
-                              <input type="text" class="form-control" value="role" disabled>
+                              <input type="text" class="form-control" name="email" value={{$user->acc_email}} disabled>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Phone</label>
-                              <input type="text" class="form-control" value="role" disabled>
+                              <input type="text" class="form-control" name="phone" value={{$user->acc_phone}} disabled>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Role</label>
-                              <input type="text" class="form-control" value="role" disabled>
+                              <input type="text" class="form-control" name="role" value={{$role}} disabled>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Message</label>
-                              <textarea class="form-control" rows="5"></textarea>
+                              <textarea class="form-control" name="msg" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="recv_id" value={{$user->acc_id}}>
                     <button type="submit" class="btn btn-success pull-right" >Send</button>
                     <div class="clearfix"></div>
                   </form>

@@ -11,7 +11,7 @@
  Target Server Version : 100417
  File Encoding         : 65001
 
- Date: 27/01/2021 22:48:41
+ Date: 31/01/2021 00:49:16
 */
 
 SET NAMES utf8mb4;
@@ -31,32 +31,35 @@ CREATE TABLE `accounts`  (
   `acc_role` int NOT NULL,
   PRIMARY KEY (`acc_id`) USING BTREE,
   UNIQUE INDEX `accounts_acc_username_unique`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of accounts
 -- ----------------------------
-INSERT INTO `accounts` VALUES (1, 'teacher1', '$2y$10$cbFEHwky53gLlMvGSC68wOMUtjDbxgXoSgzLaUQT7r93EdiPNXDzq', 'Nguyen Van A', 'uchiha1610@gmail.com', '123456789', 0);
+INSERT INTO `accounts` VALUES (1, 'teacher1', '$2y$10$1Uj2K7s3nXMHhpqp6Ds4deFP05rttHDUghx/9V7ITHSjgl.iT32zK', 'Nguyen Van A', 'uchihaitachi@gmail.com', '012345678910', 0);
 INSERT INTO `accounts` VALUES (2, 'teacher2', '$2y$10$19mp8xUdqB8n7nnRiGMnlejmr1HxaNaDoWPKPfDm2cNkgAKygCeqO', 'Nguyen Thi B', 'sharingan121@gmail.com', '123456789', 0);
 INSERT INTO `accounts` VALUES (3, 'student1', '$2y$10$ZIVwTzyVKISAl/SRuSBu3O8MBNvIPLd1E7dXPtn0GC6gR0S8pS6py', 'Nguyen Van C', 'songoku1995@gmail.com', '123456789', 1);
 INSERT INTO `accounts` VALUES (4, 'student2', '$2y$10$rI8eib/SluBNVO4hBtv/i.OlquFz7.wBaack9OPfLhN5l6baUdNXC', 'Nguyen Thi D', 'bankai2020@gmail.com', '123456789', 1);
+INSERT INTO `accounts` VALUES (5, '1', '$2y$10$pHv/8.kCaxi/dmOTWTBRauXijuEUWbUhi./Ig1qAukhFofJVcJa0.', '1', '1', '1', 1);
+INSERT INTO `accounts` VALUES (6, '2', '$2y$10$LRXFRMNTzIWcE2wMDJwTWeOce.qPE8h431CBEGRqob9CnVMipmco.', '2', '2', '2', 1);
+INSERT INTO `accounts` VALUES (7, '1233', '$2y$10$hy50nBZj0wEL2NpSDnZW4uMNjl06E8faBwluZJOl0rK252GAt4ree', '333', '333', '0333444', 1);
+INSERT INTO `accounts` VALUES (8, '3', '$2y$10$8a8h5RRDf.yNCL388KKzyunQ7u9vsb6NGJOf1ndeVuOQzggKWvEcG', '3', '3', '3', 1);
 
 -- ----------------------------
 -- Table structure for game
 -- ----------------------------
 DROP TABLE IF EXISTS `game`;
 CREATE TABLE `game`  (
-  `game_id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `game_hint` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`game_id`) USING BTREE,
-  UNIQUE INDEX `game_game_hint_unique`(`game_hint`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+  `game_id` int NOT NULL AUTO_INCREMENT,
+  `game_hint` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`game_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of game
 -- ----------------------------
-INSERT INTO `game` VALUES (1, 'aaa');
-INSERT INTO `game` VALUES (2, 'bbb');
+INSERT INTO `game` VALUES (8, 'Nguyen Trai');
+INSERT INTO `game` VALUES (9, 'Ly Thuong Kiet');
 
 -- ----------------------------
 -- Table structure for homeworks
@@ -73,7 +76,7 @@ CREATE TABLE `homeworks`  (
   UNIQUE INDEX `homeworks_hw_path_unique`(`hw_path`) USING BTREE,
   INDEX `homeworks_hw_teacherid_foreign`(`hw_teacherid`) USING BTREE,
   CONSTRAINT `homeworks_hw_teacherid_foreign` FOREIGN KEY (`hw_teacherid`) REFERENCES `accounts` (`acc_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of homeworks
@@ -91,7 +94,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of migrations
@@ -113,14 +116,20 @@ CREATE TABLE `msg`  (
   INDEX `msg_msg_idrecver_foreign`(`msg_idrecver`) USING BTREE,
   CONSTRAINT `msg_msg_idrecver_foreign` FOREIGN KEY (`msg_idrecver`) REFERENCES `accounts` (`acc_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `msg_msg_idsender_foreign` FOREIGN KEY (`msg_idsender`) REFERENCES `accounts` (`acc_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of msg
 -- ----------------------------
-INSERT INTO `msg` VALUES (1, '11111111', 1, 2, 'now');
-INSERT INTO `msg` VALUES (2, '222222', 2, 1, 'then');
-INSERT INTO `msg` VALUES (3, '33333', 1, 3, 'then');
+INSERT INTO `msg` VALUES (4, 'test1', 1, 3, '11:10:16pm 30-01-2021');
+INSERT INTO `msg` VALUES (6, '123456', 1, 2, '06:32:15pm 30-01-2021');
+INSERT INTO `msg` VALUES (7, '4', 1, 4, '07:05:07pm 30-01-2021');
+INSERT INTO `msg` VALUES (9, '1111', 1, 4, '07:42:39pm 30-01-2021');
+INSERT INTO `msg` VALUES (10, 'test1', 1, 5, '08:21:44pm 30-01-2021');
+INSERT INTO `msg` VALUES (11, 'test2', 1, 5, '08:22:04pm 30-01-2021');
+INSERT INTO `msg` VALUES (12, 'hello', 5, 1, '08:23:23pm 30-01-2021');
+INSERT INTO `msg` VALUES (13, 'hello', 5, 4, '08:23:42pm 30-01-2021');
+INSERT INTO `msg` VALUES (14, '123', 7, 1, '09:51:54pm 30-01-2021');
 
 -- ----------------------------
 -- Table structure for results
@@ -138,7 +147,7 @@ CREATE TABLE `results`  (
   INDEX `results_kq_homeworkid_foreign`(`kq_homeworkid`) USING BTREE,
   CONSTRAINT `results_kq_homeworkid_foreign` FOREIGN KEY (`kq_homeworkid`) REFERENCES `homeworks` (`hw_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `results_kq_studentid_foreign` FOREIGN KEY (`kq_studentid`) REFERENCES `accounts` (`acc_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of results

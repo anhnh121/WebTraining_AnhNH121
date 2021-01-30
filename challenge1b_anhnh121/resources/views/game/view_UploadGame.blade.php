@@ -61,16 +61,17 @@
             </div>
             <div class="card-body">
               <div id="typography">
-                  <form method="POST" enctype="multipart/form-data" action="">
+                  <form method="post" enctype="multipart/form-data" action="{{route('UploadGame')}}">
+                      {{ csrf_field() }}
                       <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                              <label>Hint</label>
-                              <input type="text" class="form-control" value="email">
+                              <label>Press Hint</label>
+                              <input type="text" class="form-control" name="hint" required>
                             </div>
                         </div>
                     </div>
-                      <label>Upload File</label><br>
+                    <label>Upload File</label><br>
                     <input type="file" name="myFile" id="myFile"><br>
                     <button type="submit" class="btn btn-success pull-right" >Upload</button>
                     <div class="clearfix"></div>

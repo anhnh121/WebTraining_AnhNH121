@@ -10,6 +10,7 @@ class Homework extends Model
     use HasFactory;
     protected $table = 'HOMEWORKS';
     protected $primaryKey = 'hw_id';
+    public $timestamps = false;
     public function hw_kq() {
         return $this->hasMany(Results::class, 'kq_homeworkid', 'hw_id');
     }

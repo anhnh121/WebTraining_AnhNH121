@@ -55,24 +55,25 @@
             </div>
             <div class="card-body">
               <div id="typography">
-                  <form>
+                  <form method="post" action="{{route('ChangePassword')}}">
+                      {{ csrf_field() }}
                       <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Current Password</label>
-                              <input type="text" class="form-control" value="email">
+                              <input type="password" class="form-control" name="old_password">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>New Password</label>
-                              <input type="text" class="form-control" value="phone">
+                              <input type="password" class="form-control" name="new_password">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Re-Enter Password</label>
-                              <input type="text" class="form-control" value="role">
+                              <input type="password" class="form-control" name="re_password">
                             </div>
                         </div>
                     </div>
