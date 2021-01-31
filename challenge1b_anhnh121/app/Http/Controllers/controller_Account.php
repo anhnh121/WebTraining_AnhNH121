@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 use App\Models\Account;
+use App\Models\Msg;
+use App\Models\Results;
+use App\Models\Homework;
 use Auth;
 use Illuminate\Http\Request;
 use App\Util\Util;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class controller_Account extends Controller
 {
@@ -154,9 +158,22 @@ class controller_Account extends Controller
                 $error = "Update OK";
             }
         }elseif ($request->delete === "delete" and $request->edit === null) {
-            echo 'Delete';
-            echo '<br>';
-            echo $request->edited_id;
+            $userid = $request->edited_id;
+            $acc = Account::find($userid);
+            // Delete all Msg
+            Msg::where('msg_idsender', $userid)->delete();
+            Msg::where('msg_idrecver', $userid)->delete();
+            // Delete all Result
+            $del_rs = Results::where('kq_studentid', $userid)->get();
+            $data = json_decode(json_encode($del_rs), true);
+            foreach ($data as $item){
+                $del_path = $item["kq_path"];
+                Storage::delete($del_path);
+            }
+            Results::where('kq_studentid', $userid)->delete();
+            // Delete Accounts
+            Account::destroy($userid);
+            
         }else{
             $error = 'Something when wrong';
                     
