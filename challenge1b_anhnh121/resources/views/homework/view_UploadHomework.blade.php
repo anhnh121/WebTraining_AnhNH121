@@ -55,17 +55,18 @@
             </div>
             <div class="card-body">
               <div id="typography">
-                  <form method="POST" enctype="multipart/form-data" action="">
+                  <form method="POST" enctype="multipart/form-data" action="{{route('UploadHomework')}}">
+                      {{ csrf_field() }}
                       <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>Title Homework</label>
-                              <input type="text" class="form-control" value="email">
+                              <input type="text" class="form-control" name="title" required>
                             </div>
                         </div>
                     </div>
                       <label>Upload File</label><br>
-                    <input type="file" name="myFile" id="myFile"><br>
+                      <input type="file" name="myFile" id="myFile" required><br>
                     <button type="submit" class="btn btn-success pull-right" >Upload</button>
                     <div class="clearfix"></div>
                   </form>

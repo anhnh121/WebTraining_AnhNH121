@@ -74,7 +74,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                               <label>User Name</label>
-                              <input type="text" class="form-control" name="username" value={{$user->username}} disabled>
+                              <input type="text" class="form-control" name="username" value='{{$user->username}}' disabled>
                             </div>
                         </div>
                         <div class="col-md-12">

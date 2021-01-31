@@ -92,24 +92,32 @@ Route::group(['prefix'=> 'User', 'middleware'=>'user'], function(){
     Route::post('postsent', [controller_Msg::class, 'submitUpdateMsg'])->name('UpdateMsg');
     
     Route::get('game', [controller_Game::class, 'getChallenge'])->name('route_Challenge');
+    Route::post('postgame', [controller_Game::class, 'postChallenge'])->name('Challenge');
 });
 
 Route::group(['prefix'=> 'Student', 'middleware'=>['user', 'student']], function(){
-    Route::get('submithistory', [controller_Homework::class, 'submitHistory'])->name('route_SubmitHistory');
+    Route::get('submithistory', [controller_Result::class, 'submitHistory'])->name('route_SubmitHistory');
+    Route::post('deletehistory', [controller_Result::class, 'deleteHistory'])->name('route_DeleteHistory');
+    
+    Route::post('postresult', [controller_Result::class, 'postResult'])->name('route_postResult');
+    
     Route::get('homework', [controller_Homework::class, 'getHomework'])->name('route_GetHomework');
+    Route::get('downhw/{id}', [controller_Homework::class, 'downloadHomework'])->name('downHomework');
     
 });
 
 Route::group(['prefix'=> 'Teacher', 'middleware'=>['user', 'teacher']], function(){
-  //domain/Student/member1
     Route::get('updateuser', [controller_Account::class, 'updateUser'])->name('route_UpdateUser');
     Route::post('postupdateuser', [controller_Account::class, 'submitUpdateUser'])->name('UpdateUser');
     
     Route::get('adduser', [controller_Account::class, 'addUser'])->name('route_AddUser');
     Route::post('postadduser', [controller_Account::class, 'submitAddUser'])->name('AddUser');
     
-    Route::get('listresult', [controller_Homework::class, 'listResult'])->name('route_ListResult');
+    Route::get('listresult', [controller_Result::class, 'listResult'])->name('route_ListResult');
+    Route::get('downkq/{id}', [controller_Result::class, 'downloadResult'])->name('downloadResult');
+    
     Route::get('uploadhw', [controller_Homework::class, 'uploadHomework'])->name('route_UploadHomework');
+    Route::post('postuploadhw', [controller_Homework::class, 'submitUploadHomework'])->name('UploadHomework');
     
     Route::get('uploadgame', [controller_Game::class, 'uploadGame'])->name('route_UploadGame');
     Route::post('postupgame', [controller_Game::class, 'submitUploadGame'])->name('UploadGame');

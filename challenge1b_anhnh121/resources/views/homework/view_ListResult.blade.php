@@ -73,22 +73,26 @@
                         <th style="color: #ffff66;">Time Upload</th>
                       </tr>
                       <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>teacher2</td>
-                            <td>Nguyen Thi B</td>
-                            <td>Teacher</td>
-                            <td><a href="#">Details</a></td>
-                            <td>Teacher</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>student1</td>
-                            <td>Nguyen Van C</td>
-                            <td>Student</td>
-                            <td><a href="#">Details</a></td>
-                            <td>Teacher</td>
-                        </tr>
+                        <?php
+                            $i=0;
+                            foreach ($data as $item){
+                                $i++;
+                                $idrow=$item['kq_id'];        
+                        ?>
+                            <form>
+                                {{ csrf_field() }}
+                                <tr>
+                                    <td>{{$i}}</td>
+                                    <td>{{$item['title']}}</td>
+                                    <td>{{$item['teacher']}}</td>
+                                    <td>{{$item['student']}}</td>
+                                    <td style="padding-left:40px;"><a href="downkq/{{$idrow}}">
+                                        <i class="material-icons">cloud_download</i>
+                                    </a></td>
+                                    <td>{{$item['kq_uptime']}}</td>									
+                            </form>
+                        <?php }?>
+                        
                       </tbody>
                     </table>
                   </div>

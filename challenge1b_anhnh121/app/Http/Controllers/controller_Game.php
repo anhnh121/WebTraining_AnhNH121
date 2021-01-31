@@ -8,7 +8,8 @@ use App\Models\Game;
 use App\Util\Util;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
- 
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage; 
 
 class controller_Game extends Controller
 {
@@ -39,10 +40,11 @@ class controller_Game extends Controller
                 $newgame->save();
                 $nowid = $newgame->game_id;
                 //Move Uploaded File
-                $destinationPath = 'upload_game'; //path public/upload_game
-                $destinationName = $namenoext . ".id" . $nowid;
+//                $destinationPath = 'upload_game'; //path public/upload_game
+                $destinationName = strtolower($namenoext) . ".id" . $nowid;
 
-                $file->move($destinationPath,$destinationName);
+//                $file->move($destinationPath,$destinationName);
+                $path = Storage::putFileAs('game', $file, $destinationName);
                 $error = "Upload OK";
                 }
    
@@ -57,9 +59,29 @@ class controller_Game extends Controller
     }
     
     public function getChallenge(){
+        $full_list = DB::table('GAME')->get();
+        $data = json_decode(json_encode($full_list), true);
         
-//        echo Auth::guard('account')->user();
+        return view('game.view_Challenge')->with('data', $data);
+    }
+    public function postChallenge(Request $request){
+        $result = strtolower($request->result);
+        $id = $request->idrow;
+        $temp = $result . ".id" . $id;
+        $pathcheck = "game\\" . $temp;
         
-        return view('game.view_Challenge');
+//        $path = Storage::path($pathcheck);
+        if (Storage::exists($pathcheck)){         
+            $content = Storage::get($pathcheck);
+//            echo nl2br($content);
+            return view('game.view_Final')->with('content', $content)->with('title', strtoupper($result));
+        }else{
+            $error = "Wrong!!! Try Again";
+            $util = new Util();
+            $util->phpAlert($error);
+            
+            return redirect()->back();
+        }
+        
     }
 }

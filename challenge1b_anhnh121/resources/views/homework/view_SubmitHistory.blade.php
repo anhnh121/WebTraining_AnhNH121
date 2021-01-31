@@ -75,18 +75,27 @@
                         <th style="color: #ffff66; text-align:center;">Actions</th>
                       </tr>
                       <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>teacher2</td>
-                            <td>Nguyen Thi B</td>
-                            <td style="text-align:center;"><button type="submit" class="btn"><i class="material-icons">delete</i></button></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>student1</td>
-                            <td>Nguyen Van C</td>
-                            <td style="text-align:center;"><button type="submit" class="btn"><i class="material-icons">delete</i></button></td>
-                        </tr>
+                        <?php
+                            $i=0;
+                            foreach ($data as $item){
+                                $i++;
+                                $idrow=$item['kq_id'];        
+                        ?>
+                            <form method="post" action="{{route('route_DeleteHistory')}}">
+                                {{ csrf_field() }}
+                                <tr>
+                                    <td>{{$i}}</td>
+                                    <td>{{$item['title']}}</td>
+                                    <td>{{$item['kq_uptime']}}</td>
+                                    <td style="text-align:center;">
+                                        <button type="submit" class="btn" name="idrow" value={{$idrow}}>
+                                            <i class="material-icons">delete</i>
+                                        </button>
+                                    </td>    
+                                </tr>   
+                            </form>
+                        <?php }?>
+                        
                       </tbody>
                     </table>
                   </div>

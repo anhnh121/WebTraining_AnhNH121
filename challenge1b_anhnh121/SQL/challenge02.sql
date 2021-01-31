@@ -11,7 +11,7 @@
  Target Server Version : 100417
  File Encoding         : 65001
 
- Date: 31/01/2021 00:49:16
+ Date: 31/01/2021 22:59:17
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `accounts`  (
   `acc_role` int NOT NULL,
   PRIMARY KEY (`acc_id`) USING BTREE,
   UNIQUE INDEX `accounts_acc_username_unique`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of accounts
@@ -44,6 +44,7 @@ INSERT INTO `accounts` VALUES (5, '1', '$2y$10$pHv/8.kCaxi/dmOTWTBRauXijuEUWbUhi
 INSERT INTO `accounts` VALUES (6, '2', '$2y$10$LRXFRMNTzIWcE2wMDJwTWeOce.qPE8h431CBEGRqob9CnVMipmco.', '2', '2', '2', 1);
 INSERT INTO `accounts` VALUES (7, '1233', '$2y$10$hy50nBZj0wEL2NpSDnZW4uMNjl06E8faBwluZJOl0rK252GAt4ree', '333', '333', '0333444', 1);
 INSERT INTO `accounts` VALUES (8, '3', '$2y$10$8a8h5RRDf.yNCL388KKzyunQ7u9vsb6NGJOf1ndeVuOQzggKWvEcG', '3', '3', '3', 1);
+INSERT INTO `accounts` VALUES (9, 'my check', '$2y$10$c9iCFBWkiViMQG5v7hCnc.Vv8cL3Gzlaak5Sa228oPm3mOKmoZ3eC', '1', '1', '1', 1);
 
 -- ----------------------------
 -- Table structure for game
@@ -53,13 +54,15 @@ CREATE TABLE `game`  (
   `game_id` int NOT NULL AUTO_INCREMENT,
   `game_hint` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`game_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of game
 -- ----------------------------
-INSERT INTO `game` VALUES (8, 'Nguyen Trai');
-INSERT INTO `game` VALUES (9, 'Ly Thuong Kiet');
+INSERT INTO `game` VALUES (11, 'Nguyen Trai');
+INSERT INTO `game` VALUES (12, 'Ly Thuong Kiet');
+INSERT INTO `game` VALUES (13, 'test');
+INSERT INTO `game` VALUES (14, 'test2');
 
 -- ----------------------------
 -- Table structure for homeworks
@@ -76,14 +79,15 @@ CREATE TABLE `homeworks`  (
   UNIQUE INDEX `homeworks_hw_path_unique`(`hw_path`) USING BTREE,
   INDEX `homeworks_hw_teacherid_foreign`(`hw_teacherid`) USING BTREE,
   CONSTRAINT `homeworks_hw_teacherid_foreign` FOREIGN KEY (`hw_teacherid`) REFERENCES `accounts` (`acc_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of homeworks
 -- ----------------------------
-INSERT INTO `homeworks` VALUES (1, 'Title1', 'path1', 'now', 1);
-INSERT INTO `homeworks` VALUES (2, 'title2', 'path2', 'now', 1);
-INSERT INTO `homeworks` VALUES (3, 'Title3', 'path3', 'then', 2);
+INSERT INTO `homeworks` VALUES (4, 'Bai 1', 'homework/bai 1.txt', '08:14:39pm 31-01-2021', 1);
+INSERT INTO `homeworks` VALUES (5, 'Bai 2', 'homework/bai 2.txt', '08:22:31pm 31-01-2021', 1);
+INSERT INTO `homeworks` VALUES (6, 'Bai 3', 'homework/bai 3.txt', '08:25:23pm 31-01-2021', 2);
+INSERT INTO `homeworks` VALUES (7, 'Bai 4', 'homework/bai 4.txt', '08:27:16pm 31-01-2021', 2);
 
 -- ----------------------------
 -- Table structure for migrations
@@ -116,7 +120,7 @@ CREATE TABLE `msg`  (
   INDEX `msg_msg_idrecver_foreign`(`msg_idrecver`) USING BTREE,
   CONSTRAINT `msg_msg_idrecver_foreign` FOREIGN KEY (`msg_idrecver`) REFERENCES `accounts` (`acc_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `msg_msg_idsender_foreign` FOREIGN KEY (`msg_idsender`) REFERENCES `accounts` (`acc_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of msg
@@ -128,8 +132,11 @@ INSERT INTO `msg` VALUES (9, '1111', 1, 4, '07:42:39pm 30-01-2021');
 INSERT INTO `msg` VALUES (10, 'test1', 1, 5, '08:21:44pm 30-01-2021');
 INSERT INTO `msg` VALUES (11, 'test2', 1, 5, '08:22:04pm 30-01-2021');
 INSERT INTO `msg` VALUES (12, 'hello', 5, 1, '08:23:23pm 30-01-2021');
-INSERT INTO `msg` VALUES (13, 'hello', 5, 4, '08:23:42pm 30-01-2021');
+INSERT INTO `msg` VALUES (13, 'hello123', 5, 4, '05:18:07pm 31-01-2021');
 INSERT INTO `msg` VALUES (14, '123', 7, 1, '09:51:54pm 30-01-2021');
+INSERT INTO `msg` VALUES (16, '11111111111', 9, 1, '10:38:35pm 31-01-2021');
+INSERT INTO `msg` VALUES (17, '222222', 9, 1, '10:38:58pm 31-01-2021');
+INSERT INTO `msg` VALUES (18, '222', 1, 9, '10:40:27pm 31-01-2021');
 
 -- ----------------------------
 -- Table structure for results
@@ -147,13 +154,16 @@ CREATE TABLE `results`  (
   INDEX `results_kq_homeworkid_foreign`(`kq_homeworkid`) USING BTREE,
   CONSTRAINT `results_kq_homeworkid_foreign` FOREIGN KEY (`kq_homeworkid`) REFERENCES `homeworks` (`hw_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `results_kq_studentid_foreign` FOREIGN KEY (`kq_studentid`) REFERENCES `accounts` (`acc_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of results
 -- ----------------------------
-INSERT INTO `results` VALUES (1, 'path', 'now', 3, 1);
-INSERT INTO `results` VALUES (2, 'qwe', 'qwe', 3, 2);
-INSERT INTO `results` VALUES (5, 'qqq', 'qqqq', 4, 1);
+INSERT INTO `results` VALUES (6, 'result/bai 1_student1.txt', '09:42:16pm 31-01-2021', 3, 4);
+INSERT INTO `results` VALUES (7, 'result/bai 2_student1.txt', '09:43:14pm 31-01-2021', 3, 5);
+INSERT INTO `results` VALUES (9, 'result/bai 4_student1.txt', '09:44:51pm 31-01-2021', 3, 7);
+INSERT INTO `results` VALUES (10, 'result/bai 3_student1.txt', '10:11:19pm 31-01-2021', 3, 6);
+INSERT INTO `results` VALUES (11, 'result/bai 1_my check.txt', '10:37:31pm 31-01-2021', 9, 4);
+INSERT INTO `results` VALUES (12, 'result/bai 2_my check.txt', '10:37:49pm 31-01-2021', 9, 5);
 
 SET FOREIGN_KEY_CHECKS = 1;

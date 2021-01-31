@@ -77,22 +77,25 @@
                         <th style="color: #ffff66;text-align:center;">Submit</th>
                       </tr>
                       <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>teacher2</td>
-                            <td><input type="text" class="form-control" value="01234567810"></td>
-                            <td style="text-align:center;">
-                                <button type="submit" class="btn"><i class="material-icons">send</i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>teacher2</td>
-                            <td><input type="text" class="form-control" value="01234567810"></td>
-                            <td style="text-align:center;">
-                                <button type="submit" class="btn"><i class="material-icons">send</i></button>
-                            </td>
-                        </tr>
+                        <?php
+                            $i=0;
+                            foreach ($data as $item){
+                                $i++;
+                                $acc_idrow=$item['game_id'];   
+                        ?>
+                          
+                            <form method="post" action="{{route('Challenge')}}">
+                                {{ csrf_field() }}
+                                <tr>
+                                    <td>{{$i}}</td>
+                                    <td>{{$item['game_hint']}}</td>
+                                    <td><input type="text" class="form-control" name="result" required></td>
+                                    <td style="text-align:center;">
+                                        <button type="submit" class="btn" name="idrow" value={{$acc_idrow}}><i class="material-icons">send</i></button>
+                                    </td>
+                                </tr>   
+                            </form>
+                        <?php } ?>
                       </tbody>
                     </table>
                   </div>

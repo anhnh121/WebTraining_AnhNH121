@@ -89,7 +89,7 @@
                                 {{ csrf_field() }}
                             <tr>
                                 <td>{{$i}}</td>
-                                <td><input type="text" class="form-control" name="username" value={{$item['username']}} ></td>
+                                <td><input type="text" class="form-control" name="username" value='{{$item['username']}}' ></td>
                                 <td><input type="password" class="form-control" name="password" value={{$item['password']}} ></td>
                                 <td><input type="text" class="form-control" name="fullname" value='{{$item['acc_fullname']}}' ></td>
                                 <td><input type="text" class="form-control" name="email" value={{$item['acc_email']}} ></td>

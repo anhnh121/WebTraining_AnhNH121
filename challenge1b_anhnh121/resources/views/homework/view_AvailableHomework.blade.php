@@ -78,24 +78,27 @@
                         <th style="color: #ffff66; text-align:center;">Actions</th>
                       </tr>
                       <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>teacher2</td>
-                            <td>Nguyen Thi B</td>
-                            <td>Nguyen Thi B</td>
-                            <td><a href="#">File</a></td>
-                            <td><input type="file" name="myFile" id="myFile"></td>
-                            <td style="text-align:center;"><button type="submit" class="btn"><i class="material-icons">cloud_upload</i></button></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>student1</td>
-                            <td>Nguyen Van C</td>
-                            <td>Nguyen Thi B</td>
-                            <td><a href="#">File</a></td>
-                            <td><input type="file" name="myFile" id="myFile"></td>
-                            <td style="text-align:center;"><button type="submit" class="btn"><i class="material-icons">cloud_upload</i></button></td>
-                        </tr>
+                        <?php
+                            $i=0;
+                            foreach ($data as $item){
+                                $i++;
+                                $idrow=$item['hw_id'];        
+                        ?>
+                            <form method="post" enctype="multipart/form-data" action="{{route('route_postResult')}}">
+                                {{ csrf_field() }}
+                                <tr>
+                                    <td>{{$i}}</td>
+                                    <td>{{$item['hw_title']}}</td>
+                                    <td>{{$item['teacher']}}</td>
+                                    <td>{{$item['hw_uptime']}}</td>
+                                    <td style="padding-left:40px;"><a href="downhw/{{$idrow}}">
+                                        <i class="material-icons">cloud_download</i>
+                                    </a></td>
+                                    <td><input type="file" name="myFile" id="myFile" required></td>
+                                    <td style="text-align:center;"><button type="submit" class="btn" name="idrow" value={{$idrow}}><i class="material-icons">cloud_upload</i></button></td> 
+                                </tr>
+                            </form>                          
+                        <?php }?>
                       </tbody>
                     </table>
                   </div>
